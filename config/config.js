@@ -12,7 +12,7 @@ const config = {
         accessExpirationDays: env["JWT_ACCESS_EXPIRATION_DAYS"] ? parseInt(env["JWT_ACCESS_EXPIRATION_DAYS"]): 7
     },
     db:{
-        url:'mongodb://localhost:27017/eapi'
+        url: env["DATABASE_CONNECTION"] ?? 'mongodb://localhost:27017/eapi'
     }
 }
 
