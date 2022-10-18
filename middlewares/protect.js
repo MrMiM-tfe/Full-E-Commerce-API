@@ -7,7 +7,7 @@ const config = require('../config/config')
 // Models
 const { User } = require('../models')
 
-exports.protect = async (req, res, next) => {
+const protect = async (req, res, next) => {
 
     // 1) Getting the token
     const authHeader = req.headers.authorization;
@@ -47,3 +47,5 @@ exports.protect = async (req, res, next) => {
 
     next()
 }
+
+module.exports = protect
