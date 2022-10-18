@@ -25,7 +25,7 @@ const productSchema = new mongoose.Schema({
     },
     categories:{
         type:[mongoose.Schema.ObjectId],
-        ref:'Category'
+        ref:'Product_Category'
     },
     seller:{
         type: mongoose.Schema.ObjectId,

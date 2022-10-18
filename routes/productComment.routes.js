@@ -5,13 +5,13 @@ const router = express.Router()
 const { ProductCommentController } = require('../controllers')
 
 // middlewares
-const protect = require('../middlewares/protect')
+const { adminCheck } = require('../middlewares/auth')
 
 router.get('/:productId', ProductCommentController.getAllComments )
-
-router.use(protect)
-
 router.post('/:productId', ProductCommentController.addComment)
+
+router.use(adminCheck)
+
 router.delete('/:commentId', ProductCommentController.deleteComment)
 
 module.exports = router

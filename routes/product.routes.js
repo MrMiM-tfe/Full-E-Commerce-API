@@ -6,12 +6,12 @@ const router = express.Router()
 const { productController } = require('../controllers')
 
 // middlewares
-const protect = require('../middlewares/protect')
+const { sellerCheck } = require('../middlewares/auth')
 
 router.get('/', productController.getAllProducts)
 router.get('/:slug', productController.getProduct)
 
-router.use(protect)
+router.use(sellerCheck)
 
 router.post('/', productController.addProdcut)
 router.put('/:slug', productController.editProduct)

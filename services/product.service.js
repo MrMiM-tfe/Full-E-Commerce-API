@@ -1,5 +1,5 @@
 // Utils
-const getDucs = require('../utils/getDucs')
+const { getDocs } = require('../utils/getDocs')
 
 // Models
 const { Product, User } = require('../models')
@@ -11,7 +11,7 @@ const { Product, User } = require('../models')
  */
 exports.getProducts = async (req) => {
 
-    const products = await getDucs(req, Product)
+    const products = await getDocs(req, Product)
 
     // 1) Check if products is empty
     if (!products) {
@@ -64,6 +64,7 @@ exports.getProductBySlug = async (slug) => {
 exports.createProduct = async (body, seller) => {
     const {
         name,
+        slug,
         coverImage,
         images,
         shortDes,
@@ -89,6 +90,7 @@ exports.createProduct = async (body, seller) => {
     // 2) Create product
     const product = await Product.create({
         name,
+        slug,
         coverImage,
         images,
         shortDes,
