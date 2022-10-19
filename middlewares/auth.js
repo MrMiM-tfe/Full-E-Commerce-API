@@ -21,7 +21,15 @@ const loginCheck = async (req) => {
     }
 
     // 3) Token verification
-    const decoded = await jwt.verify(token, config.jwt.secret)
+    try {
+        var decoded = await jwt.verify(token, config.jwt.secret)
+    } catch (error) {
+        return {
+            type: "Error",
+            message: "You are not logged in!",
+            statusCode: 401
+        }
+    }
 
     // 4) Extract user data from database
     const currentUser = await User.findById(decoded.sub);
@@ -111,5 +119,6 @@ const sellerCheck = async (req, res, next) => {
 module.exports = {
     protect,
     adminCheck,
-    sellerCheck
+    sellerCheck,
+    loginCheck
 }

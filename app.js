@@ -5,6 +5,9 @@ const xss = require('xss-clean')
 const cors = require('cors')
 const mongoose = require('mongoose')
 
+// Middlewares
+const { logToConsole } = require('./middlewares/logging')
+
 // Configs
 const config = require('./config/config')
 
@@ -25,6 +28,10 @@ app.use(xss())
 app.use(cors());
 app.options('*', cors());
 
+// use middlewares
+app.use(logToConsole)
+
+// implement routes
 app.use('/api', routes)
 
 // Contect to database
