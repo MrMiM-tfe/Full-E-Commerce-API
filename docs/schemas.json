@@ -1,0 +1,349 @@
+{
+    "User":{
+        "type": "object",
+        "properties": {
+            "_id":{
+                "type": "integer"
+            },
+            "name":{
+                "type":"string"
+            },
+            "username":{
+                "type":"string"
+            },
+            "role":{
+                "type":"string"
+            },
+            "email":{
+                "type":"string"
+            },
+            "address":{
+                "type": "string"
+            },
+            "phone":{
+                "type":"string"
+            }
+        }
+    },
+    "ALL":{
+        "type": "object",
+        "properties": {
+            "type":{
+                "type": "string",
+                "example":"Success"
+            },
+            "message":{
+                "type": "string"
+            }
+        }
+    },
+    "registerBody":{
+        "type": "object",
+        "required": [
+            "name",
+            "username",
+            "password",
+            "passwordConfirmation",
+            "email"
+        ],
+        "properties": {
+            "name":{
+                "type":"string"
+            },
+            "username":{
+                "type": "string",
+                "minLength": 4
+            },
+            "password":{
+                "type": "string",
+                "minLength": 4
+            },
+            "passwordConfirmation":{
+                "type": "string",
+                "minLength": 4
+            },
+            "email":{
+                "type": "string",
+                "format": "email"
+            },
+            "role":{
+                "type": "string",
+                "enum": [
+                    "user",
+                    "seller"
+                ]
+            },
+            "address":{
+                "type":"string"
+            },
+            "phone":{
+                "type":"string"
+            }
+        }
+    },
+    "registerRes":{
+        "$ref":"#/loginRes"
+    },
+    "loginRes":{
+        "allOf": [
+            {
+                "$ref": "#/ALL"
+            },
+            {
+                "type": "object",
+                "properties": {
+                    "user":{
+                        "type": "object",
+                        "$ref": "#/User"
+                    },
+                    "token":{
+                        "type": "string"
+                    }
+                }
+            }
+        ]
+    },
+    "loginBody": {
+        "type": "object",
+        "required": [
+            "username",
+            "password"
+        ],
+        "properties": {
+            "username": {
+                "type": "string"
+            },
+            "password":{
+                "type": "string"
+            }
+        }
+    },
+    "Error":{
+        "type": "object",
+        "properties": {
+            "type":{
+                "type": "string",
+                "example":"Error"
+            },
+            "message":{
+                "type": "string"
+            }
+        }
+    },
+    "Product": {
+        "type":"object",
+        "properties": {
+            "_id":{
+                "type": "integer"
+            },
+            "name": {
+                "type": "string"
+            },
+            "slug": {
+                "type": "string"
+            },
+            "coverImage": {
+                "type" : "string",
+                "format": "url"
+            },
+            "images": {
+                "type": "array",
+                "items":{
+                    "type": "string",
+                    "format": "url"
+                }
+            },
+            "shortDes": {
+                "type": "string"
+            },
+            "des":{
+                "type": "string"
+            },
+            "categories": {
+                "type": "array",
+                "items": {
+                    "type": "integer"
+                }
+            },
+            "seller": {
+                "type": "integer"
+            },
+            "regularPrice": {
+                "type": "integer"
+            },
+            "sellPrice": {
+                "type": "integer"
+            },
+            "quantity": {
+                "type": "integer"
+            },
+            "sold":{
+                "type": "integer"
+            },
+            "isOutOfStock": {
+                "type": "boolean"
+            },
+            "ratingsAverage": {
+                "type": "integer"
+            },
+            "ratingsQuantity": {
+                "type": "integer"
+            }
+        }
+    },
+    "Products":{
+        "type": "object",
+        "properties": {
+            "page" : {
+                "type": "integer"
+            },
+            "limit": {
+                "type": "integer"
+            },
+            "totalCount": {
+                "type": "integer"
+            },
+            "totalPage": {
+                "type": "integer"
+            },
+            "docs":{
+                "type": "array",
+                "items": {
+                    "$ref": "#/Product"
+                }
+            }
+        }
+    },
+    "productGetRes":{
+        "allOf":[
+            {
+                "$ref": "#/ALL"
+            },
+            {
+                "type": "object",
+                "properties":{
+                    "products":{
+                        "$ref": "#/Products"
+                    }
+                }
+            }
+        ]
+    },
+    "productPostBody":{
+        "type": "object",
+        "required":[
+            "name"
+        ],
+        "properties":{
+            "name": {
+                "type": "string"
+            },
+            "slug": {
+                "type": "string"
+            },
+            "coverImage": {
+                "type" : "string",
+                "format": "url"
+            },
+            "images": {
+                "type": "array",
+                "items":{
+                    "type": "string",
+                    "format": "url"
+                }
+            },
+            "shortDes": {
+                "type": "string"
+            },
+            "des":{
+                "type": "string"
+            },
+            "categories": {
+                "type": "array",
+                "items": {
+                    "type": "integer"
+                }
+            },
+            "regularPrice": {
+                "type": "integer"
+            },
+            "sellPrice": {
+                "type": "integer"
+            },
+            "quantity": {
+                "type": "integer"
+            }
+        }
+    },
+    "productPostRes":{
+        "allOf":[
+            {
+                "$ref": "#/ALL"
+            },
+            {
+                "type": "object",
+                "properties":{
+                    "product":{
+                        "$ref":"#/Product"
+                    }
+                }
+            }
+        ]
+    },
+    "productPutBody":{
+        "type":"object",
+        "properties":{
+            "name": {
+                "type": "string"
+            },
+            "slug": {
+                "type": "string"
+            },
+            "coverImage": {
+                "type" : "string",
+                "format": "url"
+            },
+            "images": {
+                "type": "array",
+                "items":{
+                    "type": "string",
+                    "format": "url"
+                }
+            },
+            "shortDes": {
+                "type": "string"
+            },
+            "des":{
+                "type": "string"
+            },
+            "categories": {
+                "type": "array",
+                "items": {
+                    "type": "integer"
+                }
+            },
+            "regularPrice": {
+                "type": "integer"
+            },
+            "sellPrice": {
+                "type": "integer"
+            },
+            "quantity": {
+                "type": "integer"
+            }
+        }
+    },
+    "productPutRes":{
+        "$ref": "#/productPostRes"
+    },
+    "singleProductRes":{
+        "allOf":[
+            {
+            "$ref": "#/ALL"
+            },
+            {
+                "$ref": "#/Product"
+            }
+        ]
+    }
+}

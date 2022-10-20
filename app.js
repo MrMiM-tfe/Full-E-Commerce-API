@@ -4,6 +4,8 @@ const helmet = require('helmet')
 const xss = require('xss-clean')
 const cors = require('cors')
 const mongoose = require('mongoose')
+const swaggerUi = require('swagger-ui-express');
+const apiDoc = require('./docs/bundle/doc.json')
 
 // Middlewares
 const { logToConsole } = require('./middlewares/logging')
@@ -28,8 +30,12 @@ app.use(xss())
 app.use(cors());
 app.options('*', cors());
 
+
 // use middlewares
 app.use(logToConsole)
+
+app.use('/',swaggerUi.serve)
+app.get('/', swaggerUi.setup(apiDoc))
 
 // implement routes
 app.use('/api', routes)

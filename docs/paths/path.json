@@ -1,0 +1,8 @@
+{
+    "auth":{
+        "$ref": "./auth.json"
+    },
+    "product":{
+        "$ref": "./product.json"
+    }
+}

@@ -1,0 +1,219 @@
+{
+    "home":{
+        "get":{
+            "tags":["product"],
+            "summary": "Get all products",
+            "responses": {
+                "200":{
+                    "description": "Success",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref" : "../schemas.json#/productGetRes"
+                            }
+                        }
+                    }
+                },
+                "404":{
+                    "description": "noProductsFound",
+                    "content": {
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "post":{
+            "tags":["product"],
+            "summary":"Create Product",
+            "security": [{"token" : []}],
+            "requestBody":{
+                "required":true,
+                "content": {
+                    "application/json":{
+                        "schema":{
+                            "$ref": "../schemas.json#/productPostBody"
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "201":{
+                    "description":"Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/productPostRes"
+                            }
+                        }
+                    }
+                },
+                "400":{
+                    "description": "fieldsRequired",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/Error"
+                            }
+                        }
+                    }
+                },
+                "403":{
+                    "description": "no permission",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "single":{
+        "get":{
+            "tags":["product"],
+            "summary": "Get single Product",
+            "parameters": [
+                {
+                  "name": "slug",
+                  "required":true,
+                  "in":"path",
+                  "schema":{
+                    "type":"string"
+                  }
+                }
+            ],
+            "responses":{
+                "200":{
+                    "description": "Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/singleProductRes"
+                            }
+                        }
+                    }
+                },
+                "404":{
+                    "description": "no Found",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "put":{
+            "tags":["product"],
+            "summary":"Edit Product",
+            "security": [{"token" : []}],
+            "parameters": [
+                {
+                  "name": "slug",
+                  "required":true,
+                  "in":"path",
+                  "schema":{
+                    "type":"string"
+                  }
+                }
+            ],
+            "requestBody":{
+                "required":true,
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref": "../schemas.json#/productPutBody"
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200":{
+                    "description":"Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/productPutRes"
+                            }
+                        }
+                    }
+                },
+                "404":{
+                    "description": "not found",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/Error"
+                            }
+                        }
+                    }
+                },
+                "403":{
+                    "description": "no permission",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "delete":{
+            "tags": ["product"],
+            "summary": "delete Product",
+            "security": [{"token" : []}],
+            "parameters": [
+                {
+                  "name": "slug",
+                  "required":true,
+                  "in":"path",
+                  "schema":{
+                    "type":"string"
+                  }
+                }
+            ],
+            "responses":{
+                "200":{
+                    "description":"Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/ALL"
+                            }
+                        }
+                    }
+                },
+                "404":{
+                    "description": "not found",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/Error"
+                            }
+                        }
+                    }
+                },
+                "403":{
+                    "description": "no permission",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

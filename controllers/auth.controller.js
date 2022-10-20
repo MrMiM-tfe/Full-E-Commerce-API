@@ -21,6 +21,8 @@ exports.signup = async (req, res) => {
         });
     }
 
+    console.log(message);
+
     // 3) If everything is OK, send data
     return res.status(statusCode).json({
         type,
@@ -73,7 +75,7 @@ exports.login = async (req, res) => {
 exports.logout = async (req, res) => {
 
     // 1) Calling log out service
-    const { type, message, statusCode} = await authService.logout(req.body.token)
+    const { type, message, statusCode} = await authService.logout(req.headers.authorization)
 
     // 2) Check if something went wrong
     if (type === 'Error') {

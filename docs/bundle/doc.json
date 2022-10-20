@@ -1,0 +1,703 @@
+{
+  "openapi": "3.0.2",
+  "info": {
+    "title": "Ecommerce",
+    "version": "0.1.0 beta"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:{port}/api",
+      "variables": {
+        "port": {
+          "default": "3000"
+        }
+      }
+    },
+    {
+      "url": "{http}://{domain}:{port}/api",
+      "variables": {
+        "http": {
+          "default": "http"
+        },
+        "domain": {
+          "default": "localhost"
+        },
+        "port": {
+          "default": "3000"
+        }
+      }
+    }
+  ],
+  "paths": {
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "login and get token",
+        "description": "login and get token and user doc",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "username",
+                  "password"
+                ],
+                "properties": {
+                  "username": {
+                    "type": "string"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login Successfuly,",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "user": {
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "username": {
+                              "type": "string"
+                            },
+                            "role": {
+                              "type": "string"
+                            },
+                            "email": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "phone": {
+                              "type": "string"
+                            }
+                          }
+                        },
+                        "token": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "not Login username or password is incorect",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Register and get token",
+        "description": "Register user and get auth token and user doc",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name",
+                  "username",
+                  "password",
+                  "passwordConfirmation",
+                  "email"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "username": {
+                    "type": "string",
+                    "minLength": 4
+                  },
+                  "password": {
+                    "type": "string",
+                    "minLength": 4
+                  },
+                  "passwordConfirmation": {
+                    "type": "string",
+                    "minLength": 4
+                  },
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "role": {
+                    "type": "string",
+                    "enum": [
+                      "user",
+                      "seller"
+                    ]
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "User registered Successfuly",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1auth~1login/post/responses/200/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Faild to register bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/auth/logout": {
+      "delete": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logout And delete token from db",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "logedout",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "you are not login",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get all products",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "products": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "integer"
+                            },
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "totalCount": {
+                              "type": "integer"
+                            },
+                            "totalPage": {
+                              "type": "integer"
+                            },
+                            "docs": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "noProductsFound",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Create Product",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "name"
+                ],
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "coverImage": {
+                    "type": "string",
+                    "format": "url"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "url"
+                    }
+                  },
+                  "shortDes": {
+                    "type": "string"
+                  },
+                  "des": {
+                    "type": "string"
+                  },
+                  "categories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "regularPrice": {
+                    "type": "integer"
+                  },
+                  "sellPrice": {
+                    "type": "integer"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "product": {
+                          "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "fieldsRequired",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/{slug}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get single Product",
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "slug": {
+                      "type": "string"
+                    },
+                    "coverImage": {
+                      "type": "string",
+                      "format": "url"
+                    },
+                    "images": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "format": "url"
+                      }
+                    },
+                    "shortDes": {
+                      "type": "string"
+                    },
+                    "des": {
+                      "type": "string"
+                    },
+                    "categories": {
+                      "type": "array",
+                      "items": {
+                        "type": "integer"
+                      }
+                    },
+                    "seller": {
+                      "type": "integer"
+                    },
+                    "regularPrice": {
+                      "type": "integer"
+                    },
+                    "sellPrice": {
+                      "type": "integer"
+                    },
+                    "quantity": {
+                      "type": "integer"
+                    },
+                    "sold": {
+                      "type": "integer"
+                    },
+                    "isOutOfStock": {
+                      "type": "boolean"
+                    },
+                    "ratingsAverage": {
+                      "type": "integer"
+                    },
+                    "ratingsQuantity": {
+                      "type": "integer"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Edit Product",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string"
+                  },
+                  "slug": {
+                    "type": "string"
+                  },
+                  "coverImage": {
+                    "type": "string",
+                    "format": "url"
+                  },
+                  "images": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "url"
+                    }
+                  },
+                  "shortDes": {
+                    "type": "string"
+                  },
+                  "des": {
+                    "type": "string"
+                  },
+                  "categories": {
+                    "type": "array",
+                    "items": {
+                      "type": "integer"
+                    }
+                  },
+                  "regularPrice": {
+                    "type": "integer"
+                  },
+                  "sellPrice": {
+                    "type": "integer"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/post/responses/201/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "product"
+        ],
+        "summary": "delete Product",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "slug",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "auth",
+      "description": "Auth routes"
+    },
+    {
+      "name": "product",
+      "description": "Product routes"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "token": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header",
+        "description": "put token in value of this"
+      }
+    }
+  }
+}

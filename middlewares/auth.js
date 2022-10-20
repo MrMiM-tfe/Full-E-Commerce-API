@@ -86,7 +86,7 @@ const adminCheck = async (req, res, next) => {
     }
 
     if (req.user.role != 'admin') {
-        return res.status(401).json({
+        return res.status(403).json({
             type: "Error",
             message: "no permission"
         })
@@ -107,7 +107,7 @@ const sellerCheck = async (req, res, next) => {
     }
 
     if (req.user.role != 'seller' && req.user.role != 'admin') {
-        return res.status(401).json({
+        return res.status(403).json({
             type: "Error",
             message: "no permission"
         })

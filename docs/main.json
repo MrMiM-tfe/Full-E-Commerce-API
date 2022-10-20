@@ -1,0 +1,68 @@
+{
+    "openapi":"3.0.2",
+    "info": {
+      "title":"Ecommerce",
+      "version":"0.1.0 beta"
+    },
+    "servers": [
+      {
+        "url": "http://localhost:{port}/api",
+        "variables": {
+            "port":{
+                "default": "3000"
+            }
+        }
+      },
+      {
+        "url": "{http}://{domain}:{port}/api",
+        "variables": {
+            "http":{
+                "default": "http"
+            },
+            "domain":{
+                "default": "localhost"
+            },
+            "port":{
+                "default": "3000"
+            }
+        }
+      }
+    ],
+    "paths": {
+        "/auth/login":{
+            "$ref": "./paths/path.json#/auth/login"
+        },
+        "/auth/register":{
+            "$ref": "./paths/path.json#/auth/register"
+        },
+        "/auth/logout":{
+            "$ref": "./paths/path.json#/auth/logout"
+        },
+        "/product":{
+            "$ref": "./paths/path.json#/product/home"
+        },
+        "/product/{slug}":{
+            "$ref": "./paths/path.json#/product/single"
+        }
+    },
+    "tags": [
+        {
+            "name": "auth",
+            "description": "Auth routes"
+        },
+        {
+            "name": "product",
+            "description": "Product routes"
+        }
+    ],
+    "components": {
+        "securitySchemes": {
+            "token": {
+                "type": "apiKey",
+                "name": "authorization",
+                "in": "header",
+                "description": "put token in value of this"
+            }
+        }
+    }
+  }

@@ -36,7 +36,7 @@ exports.getProducts = async (req) => {
  * @returns {Object<type|message|statusCode|product>} { type, message, statusCode, product }
  */
 exports.getProductBySlug = async (slug) => {
-    const product = Product.findOne({slug})
+    const product = await Product.findOne({slug})
 
     if (!product) {
         return {
