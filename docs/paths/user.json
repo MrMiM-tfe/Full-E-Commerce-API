@@ -1,0 +1,274 @@
+{
+    "home": {
+        "get": {
+            "tags": [
+                "user"
+            ],
+            "summary": "get all users",
+            "description": "get all users </br> need admin role for user",
+            "security": [
+                {
+                    "token": []
+                }
+            ],
+            "responses": {
+                "200": {
+                    "description": "Success",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../schemas.json#/userGetRes"
+                            }
+                        }
+                    }
+                },
+                "401": {
+                    "description": "no permission",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../schemas.json#/Error"
+                            }
+                        }
+                    }
+                },
+                "404": {
+                    "description": "no user found",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "../schemas.json#/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "id": {
+        "get": {
+            "tags": [
+                "user"
+            ],
+            "summary": "get user by id",
+            "description": "get single User by id",
+            "security": [{"token": []}],
+            "parameters": [
+                {
+                    "$ref": "#/parameters/id"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "$ref":"#/responses/200user"
+                },
+                "404": {
+                    "$ref": "#/responses/404"
+                },
+                "401": {
+                    "$ref": "#/responses/401"
+                }
+            }
+        },
+        "put": {
+            "tags": [
+                "user"
+            ],
+            "security": [{"token": []}],
+            "summary": "Edit user",
+            "description": "edit user by id",
+            "parameters": [
+                {
+                    "$ref": "#/parameters/id"
+                }
+            ],
+            "requestBody":{
+                "$ref": "#/requestBody/edit"
+            },
+            "responses":{
+                "200":{
+                    "$ref":"#/responses/200user"
+                },
+                "401":{
+                    "$ref":"#/responses/401"
+                },
+                "404":{
+                    "$ref":"#/responses/404"
+                }
+            }
+        },
+        "delete": {
+            "tags": ["user"],
+            "security": [{"token": []}],
+            "summary": "Delete user",
+            "description": "delete user by id",
+            "parameters": [
+                {
+                    "$ref": "#/parameters/id"
+                }
+            ],
+            "responses":{
+                "200":{
+                    "description":"Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/ALL"
+                            }
+                        }
+                    }
+                },
+                "401":{
+                    "$ref":"#/responses/401"
+                },
+                "404":{
+                    "$ref":"#/responses/404"
+                }
+            }
+        }
+    },
+    "username":{
+        "get": {
+            "tags": [
+                "user"
+            ],
+            "summary": "get user by username",
+            "description": "get single User by username",
+            "security": [{"token": []}],
+            "parameters": [
+                {
+                    "$ref": "#/parameters/username"
+                }
+            ],
+            "responses": {
+                "200": {
+                    "$ref":"#/responses/200user"
+                },
+                "404": {
+                    "$ref": "#/responses/404"
+                },
+                "401": {
+                    "$ref": "#/responses/401"
+                }
+            }
+        },
+        "put": {
+            "tags": [
+                "user"
+            ],
+            "security": [{"token": []}],
+            "summary": "Edit user",
+            "description": "edit user by username",
+            "parameters": [
+                {
+                    "$ref": "#/parameters/username"
+                }
+            ],
+            "requestBody":{
+                "$ref": "#/requestBody/edit"
+            },
+            "responses":{
+                "200":{
+                    "$ref":"#/responses/200user"
+                },
+                "401":{
+                    "$ref":"#/responses/401"
+                },
+                "404":{
+                    "$ref":"#/responses/404"
+                }
+            }
+        },
+        "delete": {
+            "tags": ["user"],
+            "security": [{"token": []}],
+            "summary": "Delete user",
+            "description": "delete user by username",
+            "parameters": [
+                {
+                    "$ref": "#/parameters/username"
+                }
+            ],
+            "responses":{
+                "200":{
+                    "description":"Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref":"../schemas.json#/ALL"
+                            }
+                        }
+                    }
+                },
+                "401":{
+                    "$ref":"#/responses/401"
+                },
+                "404":{
+                    "$ref":"#/responses/404"
+                }
+            }
+        }
+    },
+    "requestBody":{
+        "edit":{
+            "required":true,
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref": "../schemas.json#/User"
+                    }
+                }
+            }
+        }
+    },
+    "responses": {
+        "200user":{
+            "description": "Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/User"
+                            }
+                        }
+                    }
+        },
+        "404": {
+            "description": "user not foud",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../schemas.json#/Error"
+                    }
+                }
+            }
+        },
+        "401": {
+            "description": "no permission",
+            "content": {
+                "application/json": {
+                    "schema": {
+                        "$ref": "../schemas.json#/Error"
+                    }
+                }
+            }
+        }
+    },
+    "parameters": {
+        "id": {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+                "type": "string"
+            }
+        },
+        "username": {
+            "name": "username",
+            "required": true,
+            "in": "path",
+            "schema": {
+                "type": "string"
+            }
+        }
+    }
+}

@@ -25,6 +25,44 @@
             }
         }
     },
+    "Users":{
+        "type":"object",
+        "properties":{
+            "page" : {
+                "type": "integer"
+            },
+            "limit": {
+                "type": "integer"
+            },
+            "totalCount": {
+                "type": "integer"
+            },
+            "totalPage": {
+                "type": "integer"
+            },
+            "docs":{
+                "type": "array",
+                "items": {
+                    "$ref": "#/User"
+                }
+            }
+        }
+    },
+    "userGetRes":{
+        "allOf":[
+            {
+                "$ref": "#/ALL"
+            },
+            {
+                "type":"object",
+                "properties":{
+                    "users":{
+                        "$ref":"#/Users"
+                    }
+                }
+            }
+        ]
+    },
     "ALL":{
         "type": "object",
         "properties": {

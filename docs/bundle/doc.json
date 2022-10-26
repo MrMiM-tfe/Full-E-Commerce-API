@@ -29,6 +29,65 @@
     }
   ],
   "paths": {
+    "/auth/getuser": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "get current user",
+        "description": "get current user by token in header",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/josn": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "user not found by this token",
+            "content": {
+              "application/josn": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/login": {
       "post": {
         "tags": [
@@ -73,29 +132,7 @@
                       "properties": {
                         "user": {
                           "type": "object",
-                          "properties": {
-                            "_id": {
-                              "type": "integer"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "username": {
-                              "type": "string"
-                            },
-                            "role": {
-                              "type": "string"
-                            },
-                            "email": {
-                              "type": "string"
-                            },
-                            "address": {
-                              "type": "string"
-                            },
-                            "phone": {
-                              "type": "string"
-                            }
-                          }
+                          "$ref": "#/paths/~1auth~1getuser/get/responses/200/content/application~1josn/schema"
                         },
                         "token": {
                           "type": "string"
@@ -112,7 +149,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -194,7 +231,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -238,7 +275,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -283,7 +320,7 @@
                             "docs": {
                               "type": "array",
                               "items": {
-                                "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema"
+                                "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema/allOf/1"
                               }
                             }
                           }
@@ -300,16 +337,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "example": "Error"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -393,7 +421,7 @@
                       "type": "object",
                       "properties": {
                         "product": {
-                          "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema"
+                          "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema/allOf/1"
                         }
                       }
                     }
@@ -407,7 +435,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -417,7 +445,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -447,65 +475,72 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "integer"
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
                     },
-                    "name": {
-                      "type": "string"
-                    },
-                    "slug": {
-                      "type": "string"
-                    },
-                    "coverImage": {
-                      "type": "string",
-                      "format": "url"
-                    },
-                    "images": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "format": "url"
+                    {
+                      "type": "object",
+                      "properties": {
+                        "_id": {
+                          "type": "integer"
+                        },
+                        "name": {
+                          "type": "string"
+                        },
+                        "slug": {
+                          "type": "string"
+                        },
+                        "coverImage": {
+                          "type": "string",
+                          "format": "url"
+                        },
+                        "images": {
+                          "type": "array",
+                          "items": {
+                            "type": "string",
+                            "format": "url"
+                          }
+                        },
+                        "shortDes": {
+                          "type": "string"
+                        },
+                        "des": {
+                          "type": "string"
+                        },
+                        "categories": {
+                          "type": "array",
+                          "items": {
+                            "type": "integer"
+                          }
+                        },
+                        "seller": {
+                          "type": "integer"
+                        },
+                        "regularPrice": {
+                          "type": "integer"
+                        },
+                        "sellPrice": {
+                          "type": "integer"
+                        },
+                        "quantity": {
+                          "type": "integer"
+                        },
+                        "sold": {
+                          "type": "integer"
+                        },
+                        "isOutOfStock": {
+                          "type": "boolean"
+                        },
+                        "ratingsAverage": {
+                          "type": "integer"
+                        },
+                        "ratingsQuantity": {
+                          "type": "integer"
+                        }
                       }
-                    },
-                    "shortDes": {
-                      "type": "string"
-                    },
-                    "des": {
-                      "type": "string"
-                    },
-                    "categories": {
-                      "type": "array",
-                      "items": {
-                        "type": "integer"
-                      }
-                    },
-                    "seller": {
-                      "type": "integer"
-                    },
-                    "regularPrice": {
-                      "type": "integer"
-                    },
-                    "sellPrice": {
-                      "type": "integer"
-                    },
-                    "quantity": {
-                      "type": "integer"
-                    },
-                    "sold": {
-                      "type": "integer"
-                    },
-                    "isOutOfStock": {
-                      "type": "boolean"
-                    },
-                    "ratingsAverage": {
-                      "type": "integer"
-                    },
-                    "ratingsQuantity": {
-                      "type": "integer"
                     }
-                  }
+                  ]
                 }
               }
             }
@@ -515,7 +550,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -608,7 +643,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -618,7 +653,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -661,7 +696,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -671,10 +706,327 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get all users",
+        "description": "get all users </br> need admin role for user",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "integer"
+                            },
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "totalCount": {
+                              "type": "integer"
+                            },
+                            "totalPage": {
+                              "type": "integer"
+                            },
+                            "docs": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/paths/~1auth~1getuser/get/responses/200/content/application~1josn/schema"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no user found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get user by username",
+        "description": "get single User by username",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Edit user",
+        "description": "edit user by username",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1user~1%7Busername%7D/get/parameters/0"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/paths/~1user~1id~1%7Bid%7D/put/requestBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Delete user",
+        "description": "delete user by username",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1user~1%7Busername%7D/get/parameters/0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      }
+    },
+    "/user/id/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get user by id",
+        "description": "get single User by id",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1auth~1getuser/get/responses/200/content/application~1josn/schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "user not foud",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Edit user",
+        "description": "edit user by id",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/parameters/0"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/paths/~1auth~1getuser/get/responses/200/content/application~1josn/schema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Delete user",
+        "description": "delete user by id",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/parameters/0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
           }
         }
       }
@@ -688,6 +1040,10 @@
     {
       "name": "product",
       "description": "Product routes"
+    },
+    {
+      "name": "user",
+      "description": "User routes for admin"
     }
   ],
   "components": {

@@ -2,6 +2,9 @@
     "auth":{
         "$ref": "./auth.json"
     },
+    "user":{
+        "$ref": "./user.json"
+    },
     "product":{
         "$ref": "./product.json"
     }

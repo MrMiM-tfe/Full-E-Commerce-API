@@ -29,6 +29,9 @@
       }
     ],
     "paths": {
+        "/auth/getuser":{
+            "$ref": "./paths/path.json#/auth/getuser"
+        },
         "/auth/login":{
             "$ref": "./paths/path.json#/auth/login"
         },
@@ -43,6 +46,15 @@
         },
         "/product/{slug}":{
             "$ref": "./paths/path.json#/product/single"
+        },
+        "/user":{
+            "$ref": "./paths/path.json#/user/home"
+        },
+        "/user/{username}":{
+            "$ref": "./paths/path.json#/user/username"
+        },
+        "/user/id/{id}":{
+            "$ref": "./paths/path.json#/user/id"
         }
     },
     "tags": [
@@ -53,6 +65,10 @@
         {
             "name": "product",
             "description": "Product routes"
+        },
+        {
+            "name": "user",
+            "description": "User routes for admin"
         }
     ],
     "components": {
