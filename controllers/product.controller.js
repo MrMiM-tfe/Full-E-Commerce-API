@@ -5,9 +5,6 @@ const { prodcutService } = require('../services')
  * @desc      Get All Products Controller
  * @param     { Object } req - Request object
  * @param     { Object } res - Response object
- * @property  { String } req.query.sort - Sort returned data
- * @property  { Number } req.query.page - Page number
- * @property  { Number } req.query.limit - Maximum number of products
  * @returns   { JSON } - A JSON object representing the type, message and the products
  */
 exports.getAllProducts = async (req, res) => {

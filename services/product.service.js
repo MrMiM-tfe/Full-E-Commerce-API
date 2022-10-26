@@ -161,7 +161,7 @@ exports.updateProductById = updateProductById = async (productId, sellerId, body
 
     return {
         type: 'Success',
-        message: 'successfulProductDetails',
+        message: 'successfulProductUpdated',
         statusCode: 200,
         product
     }

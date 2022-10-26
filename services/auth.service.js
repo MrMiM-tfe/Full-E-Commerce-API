@@ -5,7 +5,7 @@ const tokenTypes = require('../config/tokens')
 const { generateAuthToken } = require('../middlewares/token')
 
 // Models
-const { User } = require('../models')
+const { User ,Token } = require('../models')
 
 /**
  * @desc    Signup Service
