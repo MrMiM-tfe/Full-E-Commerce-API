@@ -6,6 +6,7 @@ const Product_Comment = require('./Prodcut/Product_Comment.model')
 const Product_Category = require('./Prodcut/Product_Category')
 
 const Cart = require('./Cart.model')
+const Order = require('./Order.model')
 
 module.exports = {
     User,
@@ -13,5 +14,6 @@ module.exports = {
     Product,
     Product_Comment,
     Product_Category,
-    Cart
+    Cart,
+    Order
 }

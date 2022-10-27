@@ -10,6 +10,8 @@ const prodcutCommentRoutes = require('./productComment.routes')
 const prodcutCategoryRoutes = require('./productCategory.routes')
 
 const cartRoutes = require("./cart.routes")
+const orderRoutes = require('./order.routes')
+const paymentRoutes = require('./payment.routes')
 
 router.use('/auth', authRoutes)
 router.use('/user', userRoutes)
@@ -19,6 +21,8 @@ router.use('/comment/product', prodcutCommentRoutes)
 router.use('/category/product', prodcutCategoryRoutes)
 
 router.use('/cart', cartRoutes)
+router.use('/order', orderRoutes)
+router.use('/payment', paymentRoutes)
 
 // router.use('/article', articleRoutes)
 // router.use('/comment/article', articleCommentRoutes)

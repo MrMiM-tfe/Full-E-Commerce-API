@@ -13,6 +13,12 @@ const config = {
     },
     db:{
         url: env["DATABASE_CONNECTION"] ?? 'mongodb://localhost:27017/eapi'
+    },
+    payment:{
+        zarinpal:{
+            merchantId: env["ZARINPAL_MERCHANT"] ?? "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+            sandbox: env["ZARINPAL_SANDBOX"] ?? true
+        }
     }
 }
 

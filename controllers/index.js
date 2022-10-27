@@ -6,6 +6,8 @@ const ProductCommentController = require('./productComment.controller')
 const ProductCategoryController = require('./productCategory.controller')
 
 const cartController = require('./cart.controller')
+const orderController = require('./order.controller')
+const paymentController = require('./payment.controller')
 
 module.exports = {
     authController,
@@ -13,5 +15,7 @@ module.exports = {
     productController,
     ProductCommentController,
     ProductCategoryController,
-    cartController
+    cartController,
+    orderController,
+    paymentController
 }
