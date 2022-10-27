@@ -377,11 +377,73 @@
     "singleProductRes":{
         "allOf":[
             {
-            "$ref": "#/ALL"
+                "$ref": "#/ALL"
             },
             {
-                "$ref": "#/Product"
+                "type": "object",
+                "properties":{
+                    "product":{
+                        "$ref":"#/Product"
+                    }
+                }
             }
         ]
+    },
+    "Cart":{
+        "type":"object",
+        "properties":{
+            "user":{
+                "type":"string"
+            },
+            "active":{
+                "type": "boolean"
+            },
+            "items":{
+                "type":"object",
+                "properties":{
+                    "product":{
+                        "type":"string"
+                    },
+                    "price":{
+                        "type":"integer"
+                    },
+                    "quantity":{
+                        "type":"integer"
+                    },
+                    "totlaPrice":{
+                        "type":"integer"
+                    }
+                }
+            },
+            "totlaPrice":{
+                "type":"integer"
+            }
+        }
+    },
+    "getCartRes":{
+        "allOf":[
+            {
+                "$ref":"#/ALL"
+            },
+            {
+                "type":"object",
+                "properties":{
+                    "cart":{
+                        "$ref":"#/Cart"
+                    }
+                }
+            }
+        ]
+    },
+    "editCartBody":{
+        "type":"object",
+        "properties":{
+            "productId":{
+                "type":"string"
+            },
+            "quantity":{
+                "type":"integer"
+            }
+        }
     }
 }

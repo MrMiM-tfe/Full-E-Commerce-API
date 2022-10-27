@@ -1,8 +1,5 @@
 const mongoose = require("mongoose")
 
-// Models
-const { Product } = require('./index')
-
 const cartSchema = mongoose.Schema({
     user:{
         type: mongoose.Types.ObjectId,

@@ -7,5 +7,8 @@
     },
     "product":{
         "$ref": "./product.json"
+    },
+    "cart":{
+        "$ref":"./cart.json"
     }
 }

@@ -125,7 +125,7 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
                     {
                       "type": "object",
@@ -256,16 +256,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                 }
               }
             }
@@ -297,7 +288,7 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
                     {
                       "type": "object",
@@ -320,7 +311,7 @@
                             "docs": {
                               "type": "array",
                               "items": {
-                                "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema/allOf/1"
+                                "$ref": "#/paths/~1product/post/responses/201/content/application~1json/schema/allOf/1/properties/product"
                               }
                             }
                           }
@@ -415,13 +406,71 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
                     {
                       "type": "object",
                       "properties": {
                         "product": {
-                          "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema/allOf/1"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "coverImage": {
+                              "type": "string",
+                              "format": "url"
+                            },
+                            "images": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "format": "url"
+                              }
+                            },
+                            "shortDes": {
+                              "type": "string"
+                            },
+                            "des": {
+                              "type": "string"
+                            },
+                            "categories": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer"
+                              }
+                            },
+                            "seller": {
+                              "type": "integer"
+                            },
+                            "regularPrice": {
+                              "type": "integer"
+                            },
+                            "sellPrice": {
+                              "type": "integer"
+                            },
+                            "quantity": {
+                              "type": "integer"
+                            },
+                            "sold": {
+                              "type": "integer"
+                            },
+                            "isOutOfStock": {
+                              "type": "boolean"
+                            },
+                            "ratingsAverage": {
+                              "type": "integer"
+                            },
+                            "ratingsQuantity": {
+                              "type": "integer"
+                            }
+                          }
                         }
                       }
                     }
@@ -477,66 +526,13 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
                     {
                       "type": "object",
                       "properties": {
-                        "_id": {
-                          "type": "integer"
-                        },
-                        "name": {
-                          "type": "string"
-                        },
-                        "slug": {
-                          "type": "string"
-                        },
-                        "coverImage": {
-                          "type": "string",
-                          "format": "url"
-                        },
-                        "images": {
-                          "type": "array",
-                          "items": {
-                            "type": "string",
-                            "format": "url"
-                          }
-                        },
-                        "shortDes": {
-                          "type": "string"
-                        },
-                        "des": {
-                          "type": "string"
-                        },
-                        "categories": {
-                          "type": "array",
-                          "items": {
-                            "type": "integer"
-                          }
-                        },
-                        "seller": {
-                          "type": "integer"
-                        },
-                        "regularPrice": {
-                          "type": "integer"
-                        },
-                        "sellPrice": {
-                          "type": "integer"
-                        },
-                        "quantity": {
-                          "type": "integer"
-                        },
-                        "sold": {
-                          "type": "integer"
-                        },
-                        "isOutOfStock": {
-                          "type": "boolean"
-                        },
-                        "ratingsAverage": {
-                          "type": "integer"
-                        },
-                        "ratingsQuantity": {
-                          "type": "integer"
+                        "product": {
+                          "$ref": "#/paths/~1product/post/responses/201/content/application~1json/schema/allOf/1/properties/product"
                         }
                       }
                     }
@@ -686,7 +682,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                 }
               }
             }
@@ -734,7 +730,7 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
                     {
                       "type": "object",
@@ -888,7 +884,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                 }
               }
             }
@@ -1017,7 +1013,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                 }
               }
             }
@@ -1030,6 +1026,249 @@
           }
         }
       }
+    },
+    "/cart": {
+      "get": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "get user cart",
+        "description": "get user active cart by token",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "object",
+                          "properties": {
+                            "user": {
+                              "type": "string"
+                            },
+                            "active": {
+                              "type": "boolean"
+                            },
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "product": {
+                                  "type": "string"
+                                },
+                                "price": {
+                                  "type": "integer"
+                                },
+                                "quantity": {
+                                  "type": "integer"
+                                },
+                                "totlaPrice": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "totlaPrice": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "edit user cart",
+        "description": "edit user active cart <br/> use product id in body",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1cart/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1cart/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1cart/get/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "delete user cart",
+        "description": "delete user active cart",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/paths/~1cart/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1cart/get/responses/404"
+          }
+        }
+      }
+    },
+    "/cart/increase-one": {
+      "patch": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "increase one",
+        "description": "incorect product one in cart",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1cart/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1cart/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1cart/get/responses/404"
+          }
+        }
+      }
+    },
+    "/cart/reduce-one": {
+      "patch": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "reduce one",
+        "description": "reduce product one in cart",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1cart/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1cart/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1cart/get/responses/404"
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -1038,12 +1277,16 @@
       "description": "Auth routes"
     },
     {
+      "name": "user",
+      "description": "User routes for admin"
+    },
+    {
       "name": "product",
       "description": "Product routes"
     },
     {
-      "name": "user",
-      "description": "User routes for admin"
+      "name": "cart",
+      "description": "User cart"
     }
   ],
   "components": {

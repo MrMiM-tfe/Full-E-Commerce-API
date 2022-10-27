@@ -132,7 +132,7 @@ exports.editCart = async (productId, quantity, username) => {
 
     
     // check user
-    const user = await User.findById(reduceByOne)
+    const user = await User.findById(userId)
     if (!user) {
         return {
             type: "Error",
@@ -195,7 +195,7 @@ exports.editCart = async (productId, quantity, username) => {
             // if yes get last product and update it
             let cartItem = cart.items[itemIndex]
             
-            if (cartItem.quantity + quantity <! 0) {
+            if (cartItem.quantity + quantity > 0) {
 
                 cartItem.quantity += quantity
                 cartItem.price = price
@@ -203,7 +203,7 @@ exports.editCart = async (productId, quantity, username) => {
                 cart.totalPrice += totalPrice
                 cart.items[itemIndex] = cartItem
             }else {
-                delete cart.items[itemIndex]
+                cart.items.splice(itemIndex, 1)
             }
 
         } else {
@@ -288,6 +288,6 @@ exports.deleteCart = async (username) => {
     return {
       type: 'Success',
       message: 'successfulCartDelete',
-      statusCode: 200
+      statusCode: 201
     }
   }

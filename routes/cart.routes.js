@@ -8,7 +8,7 @@ const { cartController } = require('../controllers')
 // middlewares
 const { adminCheck, protect } = require('../middlewares/auth')
 
-router.user(protect)
+router.use(protect)
 
 // Get Cart
 // Add Item To Cart

@@ -55,6 +55,15 @@
         },
         "/user/id/{id}":{
             "$ref": "./paths/path.json#/user/id"
+        },
+        "/cart":{
+            "$ref": "./paths/path.json#/cart/home"
+        },
+        "/cart/increase-one":{
+            "$ref": "./paths/path.json#/cart/increase"
+        },
+        "/cart/reduce-one":{
+            "$ref": "./paths/path.json#/cart/reduce"
         }
     },
     "tags": [
@@ -63,12 +72,16 @@
             "description": "Auth routes"
         },
         {
+            "name": "user",
+            "description": "User routes for admin"
+        },
+        {
             "name": "product",
             "description": "Product routes"
         },
         {
-            "name": "user",
-            "description": "User routes for admin"
+            "name": "cart",
+            "description": "User cart"
         }
     ],
     "components": {
