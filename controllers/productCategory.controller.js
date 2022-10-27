@@ -62,7 +62,7 @@ exports.getCategory = async (req, res) => {
  */
 exports.addCategory = async (req ,res) => {
     // 1) create category
-    const { type, message, statusCode, category } = productCategoryService.createCategory(req.body)
+    const { type, message, statusCode, category } = await productCategoryService.createCategory(req.body)
 
     // 2) check if error
     if (type == "Error") {
@@ -88,7 +88,7 @@ exports.addCategory = async (req ,res) => {
  */
 exports.updateCategory = async (req, res) => {
     // 1) Update category
-    const { type, message, statusCode, category } = productCategoryService.updateCategory(req.params.slug, req.body)
+    const { type, message, statusCode, category } = await productCategoryService.updateCategory(req.params.slug, req.body)
 
     // 2) check if error
     if (type == "Error") {
@@ -115,7 +115,7 @@ exports.updateCategory = async (req, res) => {
  */
 exports.deleteCategory = async (req, res) => {
     // 1) delete category
-    const { type, message, statusCode } = productCategoryService.deleteCategory(req.params.slug)
+    const { type, message, statusCode } = await productCategoryService.deleteCategory(req.params.slug)
 
     // 2) check if error
     if (type == "Error") {
