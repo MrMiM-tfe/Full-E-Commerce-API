@@ -43,4 +43,27 @@ categorySchema.pre('save', function (next) {
     next()
 })
 
+const handleError = (err, doc, next) => {
+    
+    switch (err.name) {
+        case "ValidationError":
+            err.statusCode = 400
+            break;
+        case "MongoServerError":
+            if (err.code === 11000){
+                err.statusCode = 400
+            }
+            break;
+        default:
+            err.statusCode = 500
+            break;
+        }
+    next(err)
+}
+
+categorySchema.post("save", handleError)
+categorySchema.post("update", handleError)
+categorySchema.post("findOneAndUpdate", handleError)
+categorySchema.post("insertMany", handleError)
+
 module.exports = mongoose.model("Product_Category", categorySchema)

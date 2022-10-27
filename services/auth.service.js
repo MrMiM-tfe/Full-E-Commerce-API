@@ -51,22 +51,30 @@ exports.signup = async (body) => {
     
     // 2) Create new User
     const savingData = { name, username, email, password, passwordConfirmation, role, address, phone}
-    const user = await User.create(savingData)
-    
-    // 3) Generate token
-    const token = await generateAuthToken(user)
 
-    // 4) Remove the password from the output
-    user.password = undefined;
+    try {
+        const user = await User.create(savingData)
 
+        // 3) Generate token
+        const token = await generateAuthToken(user)
 
-    return {
-        type: 'Success',
-        statusCode: 201,
-        message: 'successfulSignUp',
-        user,
-        token
-    };
+        // 4) Remove the password from the output
+        user.password = undefined;
+
+        return {
+            type: 'Success',
+            statusCode: 201,
+            message: 'successfulSignUp',
+            user,
+            token
+        };
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode
+        }
+    }
 }
 
 /**

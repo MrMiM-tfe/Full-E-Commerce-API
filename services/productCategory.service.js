@@ -21,20 +21,29 @@ exports.createCategory = async (body) => {
         }
     }
 
-    // 2) create category
-    const category = await Product_Category.create({
-        name,
-        slug,
-        des,
-        mother
-    })
-
-    return {
-        type: "Success",
-        message: "CategoryCreated",
-        statusCode: 201,
-        category
+    try {
+        // 2) create category
+        const category = await Product_Category.create({
+            name,
+            slug,
+            des,
+            mother
+        })
+    
+        return {
+            type: "Success",
+            message: "CategoryCreated",
+            statusCode: 201,
+            category
+        }
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode
+        }
     }
+    
 }
 
 /**
@@ -98,16 +107,24 @@ exports.getCategory = async (slug) => {
 exports.updateCategory = async (CatSlug, body) => {
     const { name, des, mother, slug } = body
 
-    // 1) create category
-    const category = await Product_Category.findByIdAndUpdate({slug : CatSlug}, body, {
-        new: true,
-    })
-
-    return {
-        type: "Success",
-        message: "CategoryUpdated",
-        statusCode: 201,
-        category
+    try {
+        // 1) create category
+        const category = await Product_Category.findByIdAndUpdate({slug : CatSlug}, body, {
+            new: true,
+        })
+    
+        return {
+            type: "Success",
+            message: "CategoryUpdated",
+            statusCode: 201,
+            category
+        }
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode
+        }
     }
 }
 

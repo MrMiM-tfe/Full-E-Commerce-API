@@ -172,10 +172,11 @@ exports.deleteUserById = async (userId) => {
     } catch (error) {
         return {
             type: "Error",
-            message: "server error",
-            statusCode: 500
+            message: error.message,
+            statusCode: error.statusCode
         }
     }
+
 }
 
 /**

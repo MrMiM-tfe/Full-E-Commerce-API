@@ -95,6 +95,29 @@ userSchema.methods.changedPasswordAfter = function (JWTTimestamp) {
     return false;
 };
 
+const handleError = (err, doc, next) => {
+    switch (err.name) {
+        case "ValidationError":
+            err.statusCode = 400
+            break;
+        case "MongoServerError":
+            if (err.code === 11000){
+                err.statusCode = 400
+            }
+            break;
+        default:
+            err.statusCode = 500
+            break;
+        }
+    next(err)
+}
+
+userSchema.post("save", handleError)
+userSchema.post("update", handleError)
+userSchema.post("findOneAndUpdate", handleError)
+userSchema.post("insertMany", handleError)
+
+
 /**
  * @typedef User
  */

@@ -87,28 +87,36 @@ exports.createProduct = async (body, seller) => {
         }
     }
 
-    // 2) Create product
-    const product = await Product.create({
-        name,
-        slug,
-        coverImage,
-        images,
-        shortDes,
-        des,
-        seller,
-        categories,
-        regularPrice,
-        sellPrice,
-        quantity,
-        isOutOfStock
-    })
-
-    return {
-        type: 'Success',
-        message: 'successfulProductCreate',
-        statusCode: 201,
-        product
-    };
+    try {
+        // 2) Create product
+        const product = await Product.create({
+            name,
+            slug,
+            coverImage,
+            images,
+            shortDes,
+            des,
+            seller,
+            categories,
+            regularPrice,
+            sellPrice,
+            quantity,
+            isOutOfStock
+        })
+    
+        return {
+            type: 'Success',
+            message: 'successfulProductCreate',
+            statusCode: 201,
+            product
+        };   
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode
+        }
+    }
 }
 
 /**
@@ -153,18 +161,27 @@ exports.updateProductById = updateProductById = async (productId, sellerId, body
         }
     }
 
-    // 3) Update product
-    const product = await Product.findByIdAndUpdate(productId, body, {
-        new: true,
-        runValidators: true
-    })
-
-    return {
-        type: 'Success',
-        message: 'successfulProductUpdated',
-        statusCode: 200,
-        product
+    try {
+        // 3) Update product
+        const product = await Product.findByIdAndUpdate(productId, body, {
+            new: true,
+            runValidators: true
+        })
+    
+        return {
+            type: 'Success',
+            message: 'successfulProductUpdated',
+            statusCode: 200,
+            product
+        }
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode
+        }
     }
+    
 }
 
 /**
