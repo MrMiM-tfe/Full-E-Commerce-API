@@ -1735,7 +1735,19 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "RefID": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ]
                 }
               }
             }

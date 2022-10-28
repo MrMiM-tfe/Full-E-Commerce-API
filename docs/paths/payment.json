@@ -112,7 +112,19 @@
                         "content":{
                             "application/json":{
                                 "schema":{
-                                    "$ref": "../schemas.json#/ALL"
+                                    "allOf":[
+                                        {
+                                            "$ref": "../schemas.json#/ALL"
+                                        },
+                                        {
+                                            "type":"object",
+                                            "properties":{
+                                                "RefID":{
+                                                    "type":"string"
+                                                }
+                                            }
+                                        }
+                                    ]
                                 }
                             }
                         }
