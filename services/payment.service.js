@@ -109,10 +109,13 @@ exports.verifyZarinpal = async (req) => {
         }
         await order.save()
 
+        console.log(res);
+
         return {
             type: "Success",
             message: "verfied",
-            statusCode: 200
+            statusCode: 200,
+            RefID: res.RefID
         }
     }
 
