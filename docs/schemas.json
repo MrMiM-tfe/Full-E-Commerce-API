@@ -445,5 +445,109 @@
                 "type":"integer"
             }
         }
+    },
+    "Order":{
+        "type":"object",
+        "properties":{
+            "user":{
+                "type":"string"
+            },
+            "products":{
+                "type":"array"
+            },
+            "totalPrice":{
+                "type":"integer"
+            },
+            "isPaid":{
+                "type":"boolean",
+                "default": false
+            },
+            "paidAt":{
+                "type":"string"
+            },
+            "deliveredAt":{
+                "type":"string"
+            },
+            "address":{
+                "type":"string"
+            },
+            "shippingPrice":{
+                "type":"integer"
+            },
+            "phone":{
+                "type":"string"
+            },
+            "paymentMethod":{
+                "type":"string",
+                "enum":["walet", "zarinpal"]
+            },
+            "authority":{
+                "type":"string"
+            },
+            "status":{
+                "type":"string",
+                "enum":["NotPaid", "Processing", "Shipped", "Delivered", "Cancelled"]
+            }
+        }
+    },
+    "getOrderRes":{
+        "allOf":[
+            {
+                "$ref":"#/ALL"
+            },
+            {
+                "type":"object",
+                "properties":{
+                    "order":{
+                        "$ref":"#/Order"
+                    }
+                }
+            }
+        ]
+    },
+    "getOrdersRes":{
+        "allOf":[
+            {
+                "$ref":"#/ALL"
+            },
+            {
+                "type":"object",
+                "properties":{
+                    "orders":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/Order"
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    "editOrderBody":{
+        "type":"object",
+        "properties":{
+            "status":{
+                "type":"string",
+                "default":"Shipped",
+                "enum":["NotPaid", "Processing", "Shipped", "Delivered", "Cancelled"]
+            }
+        }
+    },
+    "OrderReqBody":{
+        "type":"object",
+        "properties":{
+            "paymentMethod":{
+                "required":true,
+                "type":"string",
+                "default":"zarinpal",
+                "enum":["walet", "zarinpal"]
+            },
+            "address":{
+                "type":"string"
+            },
+            "phone":{
+                "type":"string"
+            }
+        }
     }
 }

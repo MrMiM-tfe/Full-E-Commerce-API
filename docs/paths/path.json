@@ -10,5 +10,8 @@
     },
     "cart":{
         "$ref":"./cart.json"
+    },
+    "order":{
+        "$ref":"./order.json"
     }
 }

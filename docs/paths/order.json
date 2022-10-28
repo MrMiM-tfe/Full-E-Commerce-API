@@ -1,0 +1,184 @@
+{
+    "home":{
+        "post":{
+            "tags":["order"],
+            "summary":"create order",
+            "description":"create order for user using cart",
+            "security": [{"token" : []}],
+            "requestBody":{
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"../schemas.json#/OrderReqBody"
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "201":{
+                    "$ref":"#/responses/201"
+                },
+                "400":{
+                    "$ref":"#/responses/Error"
+                },
+                "404":{
+                    "$ref":"#/responses/Error"
+                },
+                "401":{
+                    "$ref":"#/responses/Error"
+                }
+            }
+        },
+        "get":{
+            "tags":["order"],
+            "summary":"get all orders for admin",
+            "description":"admin role needed",
+            "security": [{"token" : []}],
+            "responses":{
+                "200":{
+                    "$ref":"#/responses/200Orders"
+                },
+                "401":{
+                    "$ref":"#/responses/Error"
+                },
+                "404":{
+                    "$ref":"#/responses/Error"
+                }
+            }
+        }
+    },
+    "user":{
+        "get":{
+            "tags":["order"],
+            "summary":"get all user orders",
+            "description":"get all loged in user",
+            "security": [{"token": []}],
+            "responses":{
+                "200":{
+                    "$ref":"#/responses/200Orders"
+                },
+                "401":{
+                    "$ref":"#/responses/Error"
+                },
+                "404":{
+                    "$ref":"#/responses/Error"
+                }
+            }
+        }
+    },
+    "userId":{
+        "get":{
+            "tags":["order"],
+            "summary":"get user order",
+            "description":"get user single order",
+            "security":[{"token": []}],
+            "parameters": [
+                {
+                    "description":"order id",
+                    "name": "id",
+                    "required":true,
+                    "in":"path",
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "responses":{
+                "200":{
+                    "$ref":"#/responses/200Order"
+                },
+                "401":{
+                    "$ref":"#/responses/Error"
+                },
+                "404":{
+                    "$ref":"#/responses/Error"
+                }
+            }
+        }
+    },
+    "id":{
+        "put":{
+            "tags":["order"],
+            "summary":"edit order status by admin",
+            "description": "admin role needed",
+            "security":[{"token": []}],
+            "parameters": [
+                {
+                    "description":"order id",
+                    "name": "id",
+                    "required":true,
+                    "in":"path",
+                    "schema":{
+                        "type":"string"
+                    }
+                }
+            ],
+            "requestBody":{
+                "required":true,
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"../schemas.json#/editOrderBody"
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200":{
+                    "$ref":"#/responses/200Order"
+                },
+                "401":{
+                    "$ref":"#/responses/Error"
+                },
+                "404":{
+                    "$ref":"#/responses/Error"
+                },
+                "400":{
+                    "$ref":"#/responses/Error"
+                }
+            }
+        }
+    },
+    "responses":{
+        "201":{
+            "description":"Success",
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref":"../schemas.json#/getOrderRes"
+                    }
+                }
+            }
+        },
+        "200Orders":{
+            "description":"Success",
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref":"../schemas.json#/getOrdersRes"
+                    }
+                }
+            }
+        },
+        "200Order":{
+            "description":"Success",
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref":"../schemas.json#/getOrderRes"
+                    }
+                }
+            }
+        },
+        "Error":{
+            "description":"Error",
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref":"../schemas.json#/Error"
+                    }
+                }
+            }
+        }
+    }
+}

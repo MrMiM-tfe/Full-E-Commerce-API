@@ -1269,6 +1269,311 @@
           }
         }
       }
+    },
+    "/order": {
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "summary": "create order",
+        "description": "create order for user using cart",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paymentMethod": {
+                    "required": true,
+                    "type": "string",
+                    "default": "zarinpal",
+                    "enum": [
+                      "walet",
+                      "zarinpal"
+                    ]
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "order": {
+                          "type": "object",
+                          "properties": {
+                            "user": {
+                              "type": "string"
+                            },
+                            "products": {
+                              "type": "array"
+                            },
+                            "totalPrice": {
+                              "type": "integer"
+                            },
+                            "isPaid": {
+                              "type": "boolean",
+                              "default": false
+                            },
+                            "paidAt": {
+                              "type": "string"
+                            },
+                            "deliveredAt": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "shippingPrice": {
+                              "type": "integer"
+                            },
+                            "phone": {
+                              "type": "string"
+                            },
+                            "paymentMethod": {
+                              "type": "string",
+                              "enum": [
+                                "walet",
+                                "zarinpal"
+                              ]
+                            },
+                            "authority": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "NotPaid",
+                                "Processing",
+                                "Shipped",
+                                "Delivered",
+                                "Cancelled"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "401": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "get all orders for admin",
+        "description": "admin role needed",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "orders": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/paths/~1order/post/responses/201/content/application~1json/schema/allOf/1/properties/order"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      }
+    },
+    "/order/user": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "get all user orders",
+        "description": "get all loged in user",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1order/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      }
+    },
+    "/order/user/{id}": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "get user order",
+        "description": "get user single order",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "order id",
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1order~1%7Bid%7D/put/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "put": {
+        "tags": [
+          "order"
+        ],
+        "summary": "edit order status by admin",
+        "description": "admin role needed",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "order id",
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "default": "Shipped",
+                    "enum": [
+                      "NotPaid",
+                      "Processing",
+                      "Shipped",
+                      "Delivered",
+                      "Cancelled"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1order/post/responses/201/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "401": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      }
     }
   },
   "tags": [
@@ -1287,6 +1592,10 @@
     {
       "name": "cart",
       "description": "User cart"
+    },
+    {
+      "name": "order",
+      "description": "User Order"
     }
   ],
   "components": {

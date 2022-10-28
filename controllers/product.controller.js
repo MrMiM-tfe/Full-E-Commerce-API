@@ -29,7 +29,7 @@ exports.getAllProducts = async (req, res) => {
 }
 
 /**
- * @desc      Get Product Using It's ID Controller
+ * @desc      Get Product Using It's Slug Controller
  * @param     { Object } req - Request object
  * @param     { Object } res - Response object
  * @property  { String } req.params.slug - Product SLug
@@ -38,6 +38,33 @@ exports.getAllProducts = async (req, res) => {
 exports.getProduct = async (req, res) => {
     // 1) Get product by slug
     const { type, message, statusCode, product } = await prodcutService.getProductBySlug(req.params.slug)
+
+    // 2) check if error
+    if (type == "Error") {
+        return res.status(statusCode).json({
+            type,
+            message
+        })
+    }
+
+    // 3) if everything is OK, send data
+    return res.status(statusCode).json({
+        type,
+        message,
+        product
+    })    
+}
+
+/**
+ * @desc      Get Product Using It's Id Controller
+ * @param     { Object } req - Request object
+ * @param     { Object } res - Response object
+ * @property  { String } req.params.id - Product id
+ * @returns   { JSON } - A JSON object representing the type, message, and the product
+ */
+ exports.getProductById = async (req, res) => {
+    // 1) Get product by id
+    const { type, message, statusCode, product } = await prodcutService.getProductBySlug(req.params.id)
 
     // 2) check if error
     if (type == "Error") {

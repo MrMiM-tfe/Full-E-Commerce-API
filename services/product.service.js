@@ -54,6 +54,31 @@ exports.getProductBySlug = async (slug) => {
     }
 }
 
+/**
+ * @desc    Get Product By Id
+ * @param   { String } id
+ * @returns {Object<type|message|statusCode|product>} { type, message, statusCode, product }
+ */
+ exports.getProductById = async (id) => {
+    const product = await Product.findById(id)
+
+    if (!product) {
+        return {
+            type: "Error",
+            message: "productNotFound",
+            statusCode: 404
+        }
+    }
+
+    return {
+        type: "Success",
+        message: "productFound",
+        statusCode: 200,
+        product
+    }
+}
+
+
 
 /**
  * @desc    Create new Product

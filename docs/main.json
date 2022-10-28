@@ -64,6 +64,18 @@
         },
         "/cart/reduce-one":{
             "$ref": "./paths/path.json#/cart/reduce"
+        },
+        "/order":{
+            "$ref": "./paths/path.json#/order/home"
+        },
+        "/order/user":{
+            "$ref": "./paths/path.json#/order/user"
+        },
+        "/order/user/{id}":{
+            "$ref": "./paths/path.json#/order/userId"
+        },
+        "/order/{id}":{
+            "$ref": "./paths/path.json#/order/id"
         }
     },
     "tags": [
@@ -82,6 +94,10 @@
         {
             "name": "cart",
             "description": "User cart"
+        },
+        {
+            "name": "order",
+            "description": "User Order"
         }
     ],
     "components": {
