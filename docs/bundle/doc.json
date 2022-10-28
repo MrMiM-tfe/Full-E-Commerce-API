@@ -524,19 +524,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "allOf": [
-                    {
-                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
-                    },
-                    {
-                      "type": "object",
-                      "properties": {
-                        "product": {
-                          "$ref": "#/paths/~1product/post/responses/201/content/application~1json/schema/allOf/1/properties/product"
-                        }
-                      }
-                    }
-                  ]
+                  "$ref": "#/paths/~1product~1%7Bid%7D/get/responses/200/content/application~1json/schema"
                 }
               }
             }
@@ -699,6 +687,58 @@
           },
           "404": {
             "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/{id}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get single Product",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "product": {
+                          "$ref": "#/paths/~1product/post/responses/201/content/application~1json/schema/allOf/1/properties/product"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no Found",
             "content": {
               "application/json": {
                 "schema": {
