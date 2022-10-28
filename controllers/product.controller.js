@@ -64,7 +64,7 @@ exports.getProduct = async (req, res) => {
  */
  exports.getProductById = async (req, res) => {
     // 1) Get product by id
-    const { type, message, statusCode, product } = await prodcutService.getProductBySlug(req.params.id)
+    const { type, message, statusCode, product } = await prodcutService.getProductById(req.params.id)
 
     // 2) check if error
     if (type == "Error") {

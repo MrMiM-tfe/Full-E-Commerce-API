@@ -47,7 +47,7 @@
         "/product/{slug}":{
             "$ref": "./paths/path.json#/product/single"
         },
-        "/product/{id}":{
+        "/product/id/{id}":{
             "$ref": "./paths/path.json#/product/singleId"
         },
         "/user":{
