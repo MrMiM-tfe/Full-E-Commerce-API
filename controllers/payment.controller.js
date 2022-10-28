@@ -46,7 +46,6 @@ exports.verifyZarinpal = async (req, res) => {
     // if OK
     return res.status(statusCode).json({
         type,
-        message,
-        url
+        message
     })
 }

@@ -28,6 +28,7 @@ exports.pay = async (orderId, callback) => {
             const data = {
                 Amount: order.totalPrice,
                 CallbackURL: callback,
+                Description: "new payment",
                 Email: user.email,
                 Mobile: user.phone
             }

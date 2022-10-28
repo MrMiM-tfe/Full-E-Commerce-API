@@ -17,7 +17,7 @@
                                 },
                                 "callback":{
                                     "type":"string",
-                                    "default": "http://localhost:3500/verify/zp/"
+                                    "default": "http://localhost:3500/api/payment/verify/zp/"
                                 }
                             }
                         }
@@ -86,7 +86,6 @@
                 "tags":["payment"],
                 "summary":"verify payment",
                 "description": "this route should calld affter you got callback",
-                "security":[{"token": []}],
                 "parameters": [
                     {
                         "description":"Authority code",
