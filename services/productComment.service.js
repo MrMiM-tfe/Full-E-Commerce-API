@@ -49,7 +49,7 @@ exports.createComment = async (reqBody, productId, user) => {
         return {
             type: "Error",
             message: error.message,
-            statusCode: error.statusCode
+            statusCode: error.statusCode ?? 500
         }
     }
 }

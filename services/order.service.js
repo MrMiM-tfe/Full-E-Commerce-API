@@ -30,7 +30,7 @@ exports.createOrder = async (body, user) => {
         };
     }
 
-    const address = body.addres ?? user.address
+    const address = body.address ?? user.address
     const phone = body.phone ?? user.phone
 
     // check address
@@ -58,7 +58,7 @@ exports.createOrder = async (body, user) => {
             products: cart.items,
             totalPrice: cart.totalPrice,
             address,
-            paymentMethod,
+            paymentMethod: body.paymentMethod,
             phone,
             shippingPrice: 0 // need edit
         });
@@ -77,7 +77,7 @@ exports.createOrder = async (body, user) => {
         return {
             type: "Error",
             message: error.message,
-            statusCode: error.statusCode
+            statusCode: error.statusCode ?? 500
         }
     }
 }

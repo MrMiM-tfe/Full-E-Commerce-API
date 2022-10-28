@@ -139,7 +139,7 @@ exports.createProduct = async (body, seller) => {
         return {
             type: "Error",
             message: error.message,
-            statusCode: error.statusCode
+            statusCode: error.statusCode ?? 500
         }
     }
 }
@@ -203,7 +203,7 @@ exports.updateProductById = updateProductById = async (productId, sellerId, body
         return {
             type: "Error",
             message: error.message,
-            statusCode: error.statusCode
+            statusCode: error.statusCode ?? 500
         }
     }
     

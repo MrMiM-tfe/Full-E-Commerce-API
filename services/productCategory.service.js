@@ -40,7 +40,7 @@ exports.createCategory = async (body) => {
         return {
             type: "Error",
             message: error.message,
-            statusCode: error.statusCode
+            statusCode: error.statusCode ?? 500
         }
     }
     
@@ -123,7 +123,7 @@ exports.updateCategory = async (CatSlug, body) => {
         return {
             type: "Error",
             message: error.message,
-            statusCode: error.statusCode
+            statusCode: error.statusCode ?? 500
         }
     }
 }
