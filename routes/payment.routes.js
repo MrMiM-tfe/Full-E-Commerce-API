@@ -11,6 +11,6 @@ const { protect } = require('../middlewares/auth')
 router.use(protect)
 
 router.post('/pay', paymentController.pay)
-router.get('/verfy/zp', paymentController.verfyZarinpal)
+router.get('/verify/zp', paymentController.verifyZarinpal)
 
 module.exports = router

@@ -1,0 +1,165 @@
+{
+    "pay":{
+        "post":{
+            "tags":["payment"],
+            "summary": "request to pay",
+            "description": "make request to bay order",
+            "security": [{"token": []}],
+            "requestBody":{
+                "required": true,
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "orderId": {
+                                    "type":"string"
+                                },
+                                "callback":{
+                                    "type":"string",
+                                    "default": "http://localhost:3500/verify/zp/"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200":{
+                    "description":"Success",
+                    "content":{
+                        "application/josn":{
+                            "schema":{
+                                "allOf":[
+                                    {
+                                        "$ref": "../schemas.json#/ALL"
+                                    },{
+
+                                        "type":"object",
+                                        "properties":{
+                                            "url":{
+                                                "type":"string"
+                                            }
+                                        }
+                                    }    
+                                ]    
+                            }
+                        }
+                    }
+                },
+                "404":{
+                    "description":"Error",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/Error"
+                            }
+                        }
+                    }
+                },
+                "401":{
+                    "description":"Error",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/Error"
+                            }
+                        }
+                    }
+                },
+                "400":{
+                    "description":"Error",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "verify":{
+        "zp":{
+            "get":{
+                "tags":["payment"],
+                "summary":"verify payment",
+                "description": "this route should calld affter you got callback",
+                "security":[{"token": []}],
+                "parameters": [
+                    {
+                        "description":"Authority code",
+                        "name": "Authority",
+                        "required":true,
+                        "in":"query",
+                        "schema":{
+                            "type":"string"
+                        }
+                    },
+                    {
+                        "description":"Status",
+                        "name": "Status",
+                        "required":true,
+                        "in":"query",
+                        "schema":{
+                            "type":"string"
+                        }
+                    }
+                ],
+                "responses":{
+                    "200":{
+                        "description":"Success",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "../schemas.json#/ALL"
+                                }
+                            }
+                        }
+                    },
+                    "401":{
+                        "description":"No permission",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "../schemas.json#/Error"
+                                }
+                            }
+                        }
+                    },
+                    "404":{
+                        "description":"Authority is wrong",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "../schemas.json#/Error"
+                                }
+                            }
+                        }
+                    },
+                    "400":{
+                        "description":"falid to verify",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "../schemas.json#/Error"
+                                }
+                            }
+                        }
+                    },
+                    "500":{
+                        "description":"falid to verify",
+                        "content":{
+                            "application/json":{
+                                "schema":{
+                                    "$ref": "../schemas.json#/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -79,6 +79,12 @@
         },
         "/order/{id}":{
             "$ref": "./paths/path.json#/order/id"
+        },
+        "/payment/pay":{
+            "$ref": "./paths/path.json#/payment/pay"
+        },
+        "/payment/verify/zp":{
+            "$ref": "./paths/path.json#/payment/verify/zp"
         }
     },
     "tags": [

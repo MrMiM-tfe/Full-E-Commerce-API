@@ -71,7 +71,7 @@ exports.pay = async (orderId, callback) => {
     }
 }
 
-exports.verfyZarinpal = async (req) => {
+exports.verifyZarinpal = async (req) => {
     const { Authority, Status } = req.query
 
     if (Status !== "OK") {
@@ -85,6 +85,14 @@ exports.verfyZarinpal = async (req) => {
     // get order
     const order = await Order.findOne({authority: Authority})
 
+    if (!order){
+        return {
+            type:"Error",
+            message:"Authority is wrong",
+            statusCode:404
+        }
+    }
+
     const res = await zarinpal.PaymentVerification({
         Amount: order.totalPrice,
         Authority: order.authority
@@ -95,7 +103,9 @@ exports.verfyZarinpal = async (req) => {
         // update order
         order.isPaid = true
         order.paidAt = Date.now()
-        order.status = "Processing"
+        if (order.status === "NotPaid"){
+            order.status = "Processing"
+        }
         await order.save()
 
         return {

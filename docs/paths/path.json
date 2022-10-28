@@ -13,5 +13,8 @@
     },
     "order":{
         "$ref":"./order.json"
+    },
+    "payment":{
+        "$ref":"./payment.json"
     }
 }

@@ -32,8 +32,8 @@ exports.pay = async (req, res) => {
  * @param     { Object } res - Response object
  * @return    { JSON } - A JSON object representing the type, message and the url
  */
-exports.verfyZarinpal = async (req, res) => {
-    const {type, message, statusCode } = await paymentService.verfyZarinpal(req)
+exports.verifyZarinpal = async (req, res) => {
+    const {type, message, statusCode } = await paymentService.verifyZarinpal(req)
 
     // if Error
     if (type === "Error") {
