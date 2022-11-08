@@ -1,8 +1,8 @@
 // Models
-const { Order, User } = require('../models')
+const { Order, User, Keyv } = require('../models')
 
 // payments
-const zarinpal = require('../payments/zarinpal')
+const createZarinPal = require('../payments/zarinpal')
 
 exports.pay = async (orderId, callback) => {
     // get order
@@ -21,6 +21,16 @@ exports.pay = async (orderId, callback) => {
 
     switch (order.paymentMethod) {
         case "zarinpal":
+            const active = await Keyv.findOne({key: "payment_zarinpal_active"})
+
+            if (active !== "true") {
+                return {
+                    type: "Error",
+                    message: "zarinpal not suported yet",
+                    statusCode: 400
+                }
+            }
+
             if (order.totalPrice === 0) {
                 console.log("free");
             }
@@ -33,6 +43,7 @@ exports.pay = async (orderId, callback) => {
                 Mobile: user.phone
             }
 
+            const zarinpal = await createZarinPal()
             const res = await zarinpal.PaymentRequest(data)
 
             if (res.status != 100) {
@@ -93,6 +104,8 @@ exports.verifyZarinpal = async (req) => {
             statusCode:404
         }
     }
+
+    const zarinpal = await createZarinPal()
 
     const res = await zarinpal.PaymentVerification({
         Amount: order.totalPrice,

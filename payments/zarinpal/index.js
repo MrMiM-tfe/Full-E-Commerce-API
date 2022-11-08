@@ -1,6 +1,16 @@
 const config = require('../../config/config')
 const Zarinpal = require('./zarinpal')
 
-const zarinpal = Zarinpal.create(config.payment.zarinpal.merchantId, config.payment.zarinpal.sandbox)
+const { Keyv } = require('../../models')
 
-module.exports = zarinpal
+const createZarinPal = async () => {
+
+    const merchantId = await Keyv.findOne({key: "payment_zarinpal_merchant"})
+    const sandbox = await Keyv.findOne({key: "payment_zarinpal_sandbox"})
+
+    const zarinpal = Zarinpal.create(merchantId, sandbox)
+
+    return zarinpal
+}
+
+module.exports = createZarinPal
