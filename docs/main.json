@@ -29,6 +29,12 @@
       }
     ],
     "paths": {
+
+        "/setup":{
+            "$ref": "./paths/path.json#/setup/home"
+        },
+
+
         "/auth/getuser":{
             "$ref": "./paths/path.json#/auth/getuser"
         },
@@ -41,6 +47,8 @@
         "/auth/logout":{
             "$ref": "./paths/path.json#/auth/logout"
         },
+        
+
         "/product":{
             "$ref": "./paths/path.json#/product/home"
         },
@@ -50,6 +58,8 @@
         "/product/id/{id}":{
             "$ref": "./paths/path.json#/product/singleId"
         },
+
+
         "/user":{
             "$ref": "./paths/path.json#/user/home"
         },
@@ -59,6 +69,8 @@
         "/user/id/{id}":{
             "$ref": "./paths/path.json#/user/id"
         },
+
+
         "/cart":{
             "$ref": "./paths/path.json#/cart/home"
         },
@@ -68,6 +80,8 @@
         "/cart/reduce-one":{
             "$ref": "./paths/path.json#/cart/reduce"
         },
+
+
         "/order":{
             "$ref": "./paths/path.json#/order/home"
         },
@@ -80,6 +94,8 @@
         "/order/{id}":{
             "$ref": "./paths/path.json#/order/id"
         },
+
+        
         "/payment/pay":{
             "$ref": "./paths/path.json#/payment/pay"
         },
@@ -88,6 +104,10 @@
         }
     },
     "tags": [
+        {
+            "name": "setup",
+            "description": "setup the API, run it only once"
+        },
         {
             "name": "auth",
             "description": "Auth routes"

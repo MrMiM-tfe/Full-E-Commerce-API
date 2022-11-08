@@ -1,6 +1,9 @@
 const express = require('express')
 const router = express.Router()
 
+// middlewares
+const { checkSetup } = require('../middlewares/setup')
+
 // Routes
 const setupRoutes = require('./setup.routes')
 const settingRoutes = require('./setting.routes')
@@ -17,6 +20,9 @@ const orderRoutes = require('./order.routes')
 const paymentRoutes = require('./payment.routes')
 
 router.use('/setup', setupRoutes)
+
+router.use(checkSetup)
+
 router.use('/setting', settingRoutes)
 
 router.use('/auth', authRoutes)

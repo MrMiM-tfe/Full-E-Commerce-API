@@ -1,4 +1,7 @@
 {
+    "setup":{
+        "$ref": "./setup.json"
+    },
     "auth":{
         "$ref": "./auth.json"
     },

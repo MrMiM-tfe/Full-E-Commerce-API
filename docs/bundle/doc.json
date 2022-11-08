@@ -29,6 +29,23 @@
     }
   ],
   "paths": {
+    "/setup": {
+      "get": {
+        "tags": [
+          "setup"
+        ],
+        "summary": "setup the API",
+        "description": "setup API for first time",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "loaded befor"
+          }
+        }
+      }
+    },
     "/auth/getuser": {
       "get": {
         "tags": [
@@ -1797,6 +1814,10 @@
     }
   },
   "tags": [
+    {
+      "name": "setup",
+      "description": "setup the API, run it only once"
+    },
     {
       "name": "auth",
       "description": "Auth routes"
