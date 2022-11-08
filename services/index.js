@@ -1,3 +1,4 @@
+const setupService = require('./setup.service')
 const settigService = require('./setting.service')
 
 const authService = require('./auth.service')
@@ -12,6 +13,7 @@ const orderService = require('./order.service')
 const paymentService = require('./payment.service')
 
 module.exports = {
+    setupService,
     settigService,
     authService,
     userService,
