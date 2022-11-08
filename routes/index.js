@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 
 // Routes
+const settingRoutes = require('./setting.routes')
+
 const authRoutes = require('./auth.routes')
 const userRoutes = require('./user.routes')
 
@@ -12,6 +14,8 @@ const prodcutCategoryRoutes = require('./productCategory.routes')
 const cartRoutes = require("./cart.routes")
 const orderRoutes = require('./order.routes')
 const paymentRoutes = require('./payment.routes')
+
+router.use('/setting', settingRoutes)
 
 router.use('/auth', authRoutes)
 router.use('/user', userRoutes)

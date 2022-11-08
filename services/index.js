@@ -1,3 +1,5 @@
+const settigService = require('./setting.service')
+
 const authService = require('./auth.service')
 const userService = require('./user.service')
 
@@ -10,6 +12,7 @@ const orderService = require('./order.service')
 const paymentService = require('./payment.service')
 
 module.exports = {
+    settigService,
     authService,
     userService,
     prodcutService,

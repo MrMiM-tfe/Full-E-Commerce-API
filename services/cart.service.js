@@ -203,6 +203,7 @@ exports.editCart = async (productId, quantity, username) => {
                 cart.totalPrice += totalPrice
                 cart.items[itemIndex] = cartItem
             }else {
+                cart.totalPrice -= cartItem.totalPrice
                 cart.items.splice(itemIndex, 1)
             }
 

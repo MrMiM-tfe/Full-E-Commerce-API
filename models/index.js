@@ -1,3 +1,5 @@
+const Keyv = require('./Keyv.model')
+
 const User = require("./User.model")
 const Token = require("./Token.model")
 
@@ -9,6 +11,7 @@ const Cart = require('./Cart.model')
 const Order = require('./Order.model')
 
 module.exports = {
+    Keyv,
     User,
     Token,
     Product,

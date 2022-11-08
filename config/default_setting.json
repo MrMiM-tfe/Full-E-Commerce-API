@@ -1,0 +1,10 @@
+{
+    "name": "ATS SHOP",
+    "domain": "http://localhost:3000",
+    "APIdomain": "http://localhost:3500",
+    "payment_walet_active": true,
+
+    "payment_zarinpal_active":true,
+    "payment_zarinpal_merchant":null,
+    "payment_zarinpal_sandbox":true
+}
