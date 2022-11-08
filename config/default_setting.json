@@ -3,9 +3,9 @@
     "domain": "http://localhost:3000",
     "APIdomain": "http://localhost:3500",
     
-    "payment_walet_active": true,
+    "payment_walet_active": "true",
 
-    "payment_zarinpal_active":true,
-    "payment_zarinpal_merchant":null,
-    "payment_zarinpal_sandbox":true
+    "payment_zarinpal_active":"true",
+    "payment_zarinpal_merchant":"xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+    "payment_zarinpal_sandbox":"true"
 }

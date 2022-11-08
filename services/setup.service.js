@@ -7,19 +7,30 @@ const { Keyv } = require('../models')
 exports.setupSite = async () => {
     // save default settings to database
     for await (const [key, value] of Object.entries(defualts)){
+        console.log(key);
+        console.log( typeof value);
+
         if (typeof value === "string") {
-            await Keyv.create({
-                key,
-                value,
-                tag: "setting"
-            })
+            try {
+                await Keyv.create({
+                    key,
+                    value,
+                    tag: "setting"
+                })
+            } catch (error) {
+                console.log(error.message);
+            }
         } else if ( typeof value === "object"){
-            await Keyv.create({
-                key,
-                value: value[0],
-                public: value[1],
-                tag: "setting"
-            })
+            try {
+                await Keyv.create({
+                    key,
+                    value: value[0],
+                    public: value[1],
+                    tag: "setting"
+                })
+            } catch (error) {
+                console.log(error.message);
+            }
         }
     }
 
