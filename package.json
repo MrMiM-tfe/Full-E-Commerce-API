@@ -19,7 +19,6 @@
     "helmet": "^6.0.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.5",
-    "request": "^2.88.2",
     "request-promise": "^4.2.6",
     "slugify": "^1.6.5",
     "swagger-ui-express": "^4.5.0",
