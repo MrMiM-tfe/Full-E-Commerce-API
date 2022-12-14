@@ -60,4 +60,4 @@ $ npm start
  
  ## Config
  
- use `example.env` file
+ use `example.env` file and rename it to `.env`
