@@ -59,3 +59,5 @@ $ npm start
  ```
  
  ## Config
+ 
+ use `example.env` file
