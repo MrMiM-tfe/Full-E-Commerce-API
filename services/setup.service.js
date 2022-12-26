@@ -38,5 +38,7 @@ exports.setupSite = async () => {
         key: "loaded",
         value: "true",
         tag: "setting"
+    }).then(() => {
+        console.log("ok");
     })
 }
