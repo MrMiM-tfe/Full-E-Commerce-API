@@ -25,6 +25,44 @@
             }
         }
     },
+    "Users":{
+        "type":"object",
+        "properties":{
+            "page" : {
+                "type": "integer"
+            },
+            "limit": {
+                "type": "integer"
+            },
+            "totalCount": {
+                "type": "integer"
+            },
+            "totalPage": {
+                "type": "integer"
+            },
+            "docs":{
+                "type": "array",
+                "items": {
+                    "$ref": "#/User"
+                }
+            }
+        }
+    },
+    "userGetRes":{
+        "allOf":[
+            {
+                "$ref": "#/ALL"
+            },
+            {
+                "type":"object",
+                "properties":{
+                    "users":{
+                        "$ref":"#/Users"
+                    }
+                }
+            }
+        ]
+    },
     "ALL":{
         "type": "object",
         "properties": {
@@ -339,11 +377,177 @@
     "singleProductRes":{
         "allOf":[
             {
-            "$ref": "#/ALL"
+                "$ref": "#/ALL"
             },
             {
-                "$ref": "#/Product"
+                "type": "object",
+                "properties":{
+                    "product":{
+                        "$ref":"#/Product"
+                    }
+                }
             }
         ]
+    },
+    "Cart":{
+        "type":"object",
+        "properties":{
+            "user":{
+                "type":"string"
+            },
+            "active":{
+                "type": "boolean"
+            },
+            "items":{
+                "type":"object",
+                "properties":{
+                    "product":{
+                        "type":"string"
+                    },
+                    "price":{
+                        "type":"integer"
+                    },
+                    "quantity":{
+                        "type":"integer"
+                    },
+                    "totlaPrice":{
+                        "type":"integer"
+                    }
+                }
+            },
+            "totlaPrice":{
+                "type":"integer"
+            }
+        }
+    },
+    "getCartRes":{
+        "allOf":[
+            {
+                "$ref":"#/ALL"
+            },
+            {
+                "type":"object",
+                "properties":{
+                    "cart":{
+                        "$ref":"#/Cart"
+                    }
+                }
+            }
+        ]
+    },
+    "editCartBody":{
+        "type":"object",
+        "properties":{
+            "productId":{
+                "type":"string"
+            },
+            "quantity":{
+                "type":"integer"
+            }
+        }
+    },
+    "Order":{
+        "type":"object",
+        "properties":{
+            "user":{
+                "type":"string"
+            },
+            "products":{
+                "type":"array"
+            },
+            "totalPrice":{
+                "type":"integer"
+            },
+            "isPaid":{
+                "type":"boolean",
+                "default": false
+            },
+            "paidAt":{
+                "type":"string"
+            },
+            "deliveredAt":{
+                "type":"string"
+            },
+            "address":{
+                "type":"string"
+            },
+            "shippingPrice":{
+                "type":"integer"
+            },
+            "phone":{
+                "type":"string"
+            },
+            "paymentMethod":{
+                "type":"string",
+                "enum":["walet", "zarinpal"]
+            },
+            "authority":{
+                "type":"string"
+            },
+            "status":{
+                "type":"string",
+                "enum":["NotPaid", "Processing", "Shipped", "Delivered", "Cancelled"]
+            }
+        }
+    },
+    "getOrderRes":{
+        "allOf":[
+            {
+                "$ref":"#/ALL"
+            },
+            {
+                "type":"object",
+                "properties":{
+                    "order":{
+                        "$ref":"#/Order"
+                    }
+                }
+            }
+        ]
+    },
+    "getOrdersRes":{
+        "allOf":[
+            {
+                "$ref":"#/ALL"
+            },
+            {
+                "type":"object",
+                "properties":{
+                    "orders":{
+                        "type":"array",
+                        "items":{
+                            "$ref":"#/Order"
+                        }
+                    }
+                }
+            }
+        ]
+    },
+    "editOrderBody":{
+        "type":"object",
+        "properties":{
+            "status":{
+                "type":"string",
+                "default":"Shipped",
+                "enum":["NotPaid", "Processing", "Shipped", "Delivered", "Cancelled"]
+            }
+        }
+    },
+    "OrderReqBody":{
+        "type":"object",
+        "properties":{
+            "paymentMethod":{
+                "required":true,
+                "type":"string",
+                "default":"zarinpal",
+                "enum":["walet", "zarinpal"]
+            },
+            "address":{
+                "type":"string"
+            },
+            "phone":{
+                "type":"string"
+            }
+        }
     }
 }

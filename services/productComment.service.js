@@ -31,18 +31,26 @@ exports.createComment = async (reqBody, productId, user) => {
         }
     }    
 
-    const comment = await Product_Comment.create({
-        title,
-        body,
-        user,
-        product: product.id
-    })
-
-    return {
-        type: "Success",
-        message: "commnetCreated",
-        statusCode: 201,
-        comment
+    try {
+        const comment = await Product_Comment.create({
+            title,
+            body,
+            user,
+            product: product.id
+        })
+    
+        return {
+            type: "Success",
+            message: "commnetCreated",
+            statusCode: 201,
+            comment
+        }
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode ?? 500
+        }
     }
 }
 

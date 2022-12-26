@@ -1,3 +1,6 @@
+// Middlewares
+const { loginCheck } = require('../middlewares/auth')
+
 // Services
 const { authService } = require('../services')
 
@@ -90,4 +93,28 @@ exports.logout = async (req, res) => {
         type,
         message
     });
+}
+
+/**
+ * @desc      getUserInfo Controller
+ * @param     { Object } req - Request object
+ * @param     { Object } res - Response object
+ * @property  { Object } req.body.token - User token
+ * @returns   { JSON } - A JSON object representing the type and message
+ */
+exports.getUser = async (req, res) => {
+
+    // check user
+    if (!req.user) {
+        return res.status(403).json({
+            type: "Error",
+            message: "user not loged in"
+        })
+    }
+
+    return res.json({
+        type: "Success",
+        message: "user successfuly got",
+        user: req.user
+    })
 }

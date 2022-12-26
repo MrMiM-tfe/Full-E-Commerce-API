@@ -14,6 +14,14 @@
       }
     },
     {
+      "url": "{server}",
+      "variables": {
+        "server": {
+          "default": "http://example.com/api"
+        }
+      }
+    },
+    {
       "url": "{http}://{domain}:{port}/api",
       "variables": {
         "http": {
@@ -29,6 +37,82 @@
     }
   ],
   "paths": {
+    "/setup": {
+      "get": {
+        "tags": [
+          "setup"
+        ],
+        "summary": "setup the API",
+        "description": "setup API for first time",
+        "responses": {
+          "200": {
+            "description": "Success"
+          },
+          "401": {
+            "description": "loaded befor"
+          }
+        }
+      }
+    },
+    "/auth/getuser": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "get current user",
+        "description": "get current user by token in header",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/josn": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "_id": {
+                      "type": "integer"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "username": {
+                      "type": "string"
+                    },
+                    "role": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "user not found by this token",
+            "content": {
+              "application/josn": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/auth/login": {
       "post": {
         "tags": [
@@ -66,36 +150,14 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
                     {
                       "type": "object",
                       "properties": {
                         "user": {
                           "type": "object",
-                          "properties": {
-                            "_id": {
-                              "type": "integer"
-                            },
-                            "name": {
-                              "type": "string"
-                            },
-                            "username": {
-                              "type": "string"
-                            },
-                            "role": {
-                              "type": "string"
-                            },
-                            "email": {
-                              "type": "string"
-                            },
-                            "address": {
-                              "type": "string"
-                            },
-                            "phone": {
-                              "type": "string"
-                            }
-                          }
+                          "$ref": "#/paths/~1auth~1getuser/get/responses/200/content/application~1josn/schema"
                         },
                         "token": {
                           "type": "string"
@@ -112,7 +174,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -194,7 +256,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -219,16 +281,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "example": "Success"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                 }
               }
             }
@@ -238,7 +291,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -260,7 +313,7 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
                     {
                       "type": "object",
@@ -283,7 +336,7 @@
                             "docs": {
                               "type": "array",
                               "items": {
-                                "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema"
+                                "$ref": "#/paths/~1product/post/responses/201/content/application~1json/schema/allOf/1/properties/product"
                               }
                             }
                           }
@@ -300,16 +353,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "type": {
-                      "type": "string",
-                      "example": "Error"
-                    },
-                    "message": {
-                      "type": "string"
-                    }
-                  }
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -387,13 +431,71 @@
                 "schema": {
                   "allOf": [
                     {
-                      "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
                     {
                       "type": "object",
                       "properties": {
                         "product": {
-                          "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema"
+                          "type": "object",
+                          "properties": {
+                            "_id": {
+                              "type": "integer"
+                            },
+                            "name": {
+                              "type": "string"
+                            },
+                            "slug": {
+                              "type": "string"
+                            },
+                            "coverImage": {
+                              "type": "string",
+                              "format": "url"
+                            },
+                            "images": {
+                              "type": "array",
+                              "items": {
+                                "type": "string",
+                                "format": "url"
+                              }
+                            },
+                            "shortDes": {
+                              "type": "string"
+                            },
+                            "des": {
+                              "type": "string"
+                            },
+                            "categories": {
+                              "type": "array",
+                              "items": {
+                                "type": "integer"
+                              }
+                            },
+                            "seller": {
+                              "type": "integer"
+                            },
+                            "regularPrice": {
+                              "type": "integer"
+                            },
+                            "sellPrice": {
+                              "type": "integer"
+                            },
+                            "quantity": {
+                              "type": "integer"
+                            },
+                            "sold": {
+                              "type": "integer"
+                            },
+                            "isOutOfStock": {
+                              "type": "boolean"
+                            },
+                            "ratingsAverage": {
+                              "type": "integer"
+                            },
+                            "ratingsQuantity": {
+                              "type": "integer"
+                            }
+                          }
                         }
                       }
                     }
@@ -407,7 +509,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -417,7 +519,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -447,65 +549,19 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "_id": {
-                      "type": "integer"
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                     },
-                    "name": {
-                      "type": "string"
-                    },
-                    "slug": {
-                      "type": "string"
-                    },
-                    "coverImage": {
-                      "type": "string",
-                      "format": "url"
-                    },
-                    "images": {
-                      "type": "array",
-                      "items": {
-                        "type": "string",
-                        "format": "url"
+                    {
+                      "type": "object",
+                      "properties": {
+                        "product": {
+                          "$ref": "#/paths/~1product/post/responses/201/content/application~1json/schema/allOf/1/properties/product"
+                        }
                       }
-                    },
-                    "shortDes": {
-                      "type": "string"
-                    },
-                    "des": {
-                      "type": "string"
-                    },
-                    "categories": {
-                      "type": "array",
-                      "items": {
-                        "type": "integer"
-                      }
-                    },
-                    "seller": {
-                      "type": "integer"
-                    },
-                    "regularPrice": {
-                      "type": "integer"
-                    },
-                    "sellPrice": {
-                      "type": "integer"
-                    },
-                    "quantity": {
-                      "type": "integer"
-                    },
-                    "sold": {
-                      "type": "integer"
-                    },
-                    "isOutOfStock": {
-                      "type": "boolean"
-                    },
-                    "ratingsAverage": {
-                      "type": "integer"
-                    },
-                    "ratingsQuantity": {
-                      "type": "integer"
                     }
-                  }
+                  ]
                 }
               }
             }
@@ -515,7 +571,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -608,7 +664,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -618,7 +674,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -651,7 +707,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1auth~1logout/delete/responses/200/content/application~1json/schema"
+                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
                 }
               }
             }
@@ -661,7 +717,7 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -671,7 +727,1092 @@
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/paths/~1product/get/responses/404/content/application~1json/schema"
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/product/id/{id}": {
+      "get": {
+        "tags": [
+          "product"
+        ],
+        "summary": "Get single Product",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1product~1%7Bslug%7D/get/responses/200/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get all users",
+        "description": "get all users </br> need admin role for user",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "users": {
+                          "type": "object",
+                          "properties": {
+                            "page": {
+                              "type": "integer"
+                            },
+                            "limit": {
+                              "type": "integer"
+                            },
+                            "totalCount": {
+                              "type": "integer"
+                            },
+                            "totalPage": {
+                              "type": "integer"
+                            },
+                            "docs": {
+                              "type": "array",
+                              "items": {
+                                "$ref": "#/paths/~1auth~1getuser/get/responses/200/content/application~1josn/schema"
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "Error"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "no user found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/user/{username}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get user by username",
+        "description": "get single User by username",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "username",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Edit user",
+        "description": "edit user by username",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1user~1%7Busername%7D/get/parameters/0"
+          }
+        ],
+        "requestBody": {
+          "$ref": "#/paths/~1user~1id~1%7Bid%7D/put/requestBody"
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Delete user",
+        "description": "delete user by username",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1user~1%7Busername%7D/get/parameters/0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      }
+    },
+    "/user/id/{id}": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "get user by id",
+        "description": "get single User by id",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1auth~1getuser/get/responses/200/content/application~1josn/schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "user not foud",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Edit user",
+        "description": "edit user by id",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/parameters/0"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/paths/~1auth~1getuser/get/responses/200/content/application~1josn/schema"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "summary": "Delete user",
+        "description": "delete user by id",
+        "parameters": [
+          {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/parameters/0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1user~1id~1%7Bid%7D/get/responses/404"
+          }
+        }
+      }
+    },
+    "/cart": {
+      "get": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "get user cart",
+        "description": "get user active cart by token",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "cart": {
+                          "type": "object",
+                          "properties": {
+                            "user": {
+                              "type": "string"
+                            },
+                            "active": {
+                              "type": "boolean"
+                            },
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "product": {
+                                  "type": "string"
+                                },
+                                "price": {
+                                  "type": "integer"
+                                },
+                                "quantity": {
+                                  "type": "integer"
+                                },
+                                "totlaPrice": {
+                                  "type": "integer"
+                                }
+                              }
+                            },
+                            "totlaPrice": {
+                              "type": "integer"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "no permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "edit user cart",
+        "description": "edit user active cart <br/> use product id in body",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string"
+                  },
+                  "quantity": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1cart/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1cart/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1cart/get/responses/404"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "delete user cart",
+        "description": "delete user active cart",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "Success"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/paths/~1cart/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1cart/get/responses/404"
+          }
+        }
+      }
+    },
+    "/cart/increase-one": {
+      "patch": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "increase one",
+        "description": "incorect product one in cart",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1cart/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1cart/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1cart/get/responses/404"
+          }
+        }
+      }
+    },
+    "/cart/reduce-one": {
+      "patch": {
+        "tags": [
+          "cart"
+        ],
+        "summary": "reduce one",
+        "description": "reduce product one in cart",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "productId": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1cart/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1cart/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1cart/get/responses/404"
+          }
+        }
+      }
+    },
+    "/order": {
+      "post": {
+        "tags": [
+          "order"
+        ],
+        "summary": "create order",
+        "description": "create order for user using cart",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "paymentMethod": {
+                    "required": true,
+                    "type": "string",
+                    "default": "zarinpal",
+                    "enum": [
+                      "walet",
+                      "zarinpal"
+                    ]
+                  },
+                  "address": {
+                    "type": "string"
+                  },
+                  "phone": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "order": {
+                          "type": "object",
+                          "properties": {
+                            "user": {
+                              "type": "string"
+                            },
+                            "products": {
+                              "type": "array"
+                            },
+                            "totalPrice": {
+                              "type": "integer"
+                            },
+                            "isPaid": {
+                              "type": "boolean",
+                              "default": false
+                            },
+                            "paidAt": {
+                              "type": "string"
+                            },
+                            "deliveredAt": {
+                              "type": "string"
+                            },
+                            "address": {
+                              "type": "string"
+                            },
+                            "shippingPrice": {
+                              "type": "integer"
+                            },
+                            "phone": {
+                              "type": "string"
+                            },
+                            "paymentMethod": {
+                              "type": "string",
+                              "enum": [
+                                "walet",
+                                "zarinpal"
+                              ]
+                            },
+                            "authority": {
+                              "type": "string"
+                            },
+                            "status": {
+                              "type": "string",
+                              "enum": [
+                                "NotPaid",
+                                "Processing",
+                                "Shipped",
+                                "Delivered",
+                                "Cancelled"
+                              ]
+                            }
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "401": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "get all orders for admin",
+        "description": "admin role needed",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "orders": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/paths/~1order/post/responses/201/content/application~1json/schema/allOf/1/properties/order"
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      }
+    },
+    "/order/user": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "get all user orders",
+        "description": "get all loged in user",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1order/get/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      }
+    },
+    "/order/user/{id}": {
+      "get": {
+        "tags": [
+          "order"
+        ],
+        "summary": "get user order",
+        "description": "get user single order",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "order id",
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/paths/~1order~1%7Bid%7D/put/responses/200"
+          },
+          "401": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      }
+    },
+    "/order/{id}": {
+      "put": {
+        "tags": [
+          "order"
+        ],
+        "summary": "edit order status by admin",
+        "description": "admin role needed",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "parameters": [
+          {
+            "description": "order id",
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "status": {
+                    "type": "string",
+                    "default": "Shipped",
+                    "enum": [
+                      "NotPaid",
+                      "Processing",
+                      "Shipped",
+                      "Delivered",
+                      "Cancelled"
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1order/post/responses/201/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "400": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "401": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          },
+          "404": {
+            "$ref": "#/paths/~1order/get/responses/401"
+          }
+        }
+      }
+    },
+    "/payment/pay": {
+      "post": {
+        "tags": [
+          "payment"
+        ],
+        "summary": "request to pay",
+        "description": "make request to bay order",
+        "security": [
+          {
+            "token": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderId": {
+                    "type": "string"
+                  },
+                  "callback": {
+                    "type": "string",
+                    "default": "http://localhost:3500/api/payment/verify/zp/"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/josn": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/payment/verify/zp": {
+      "get": {
+        "tags": [
+          "payment"
+        ],
+        "summary": "verify payment",
+        "description": "this route should calld affter you got callback",
+        "parameters": [
+          {
+            "description": "Authority code",
+            "name": "Authority",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "description": "Status",
+            "name": "Status",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "allOf": [
+                    {
+                      "$ref": "#/paths/~1cart/delete/responses/200/content/application~1json/schema"
+                    },
+                    {
+                      "type": "object",
+                      "properties": {
+                        "RefID": {
+                          "type": "string"
+                        }
+                      }
+                    }
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "falid to verify",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "No permission",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Authority is wrong",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "falid to verify",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/paths/~1user/get/responses/401/content/application~1json/schema"
                 }
               }
             }
@@ -682,12 +1823,28 @@
   },
   "tags": [
     {
+      "name": "setup",
+      "description": "setup the API, run it only once"
+    },
+    {
       "name": "auth",
       "description": "Auth routes"
     },
     {
+      "name": "user",
+      "description": "User routes for admin"
+    },
+    {
       "name": "product",
       "description": "Product routes"
+    },
+    {
+      "name": "cart",
+      "description": "User cart"
+    },
+    {
+      "name": "order",
+      "description": "User Order"
     }
   ],
   "components": {

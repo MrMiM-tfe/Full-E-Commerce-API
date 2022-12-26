@@ -1,8 +1,23 @@
 {
+    "setup":{
+        "$ref": "./setup.json"
+    },
     "auth":{
         "$ref": "./auth.json"
     },
+    "user":{
+        "$ref": "./user.json"
+    },
     "product":{
         "$ref": "./product.json"
+    },
+    "cart":{
+        "$ref":"./cart.json"
+    },
+    "order":{
+        "$ref":"./order.json"
+    },
+    "payment":{
+        "$ref":"./payment.json"
     }
 }

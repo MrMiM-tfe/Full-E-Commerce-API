@@ -10,6 +10,7 @@ const { sellerCheck } = require('../middlewares/auth')
 
 router.get('/', productController.getAllProducts)
 router.get('/:slug', productController.getProduct)
+router.get('/id/:id', productController.getProductById)
 
 router.use(sellerCheck)
 

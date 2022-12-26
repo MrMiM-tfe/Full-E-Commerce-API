@@ -1,0 +1,169 @@
+{
+    "home":{
+        "get":{
+            "tags":["cart"],
+            "summary":"get user cart",
+            "description": "get user active cart by token",
+            "security": [{"token" : []}],
+            "responses":{
+                "200":{
+                    "$ref": "#/responses/200"
+                },
+                "404":{
+                    "$ref": "#/responses/404"
+                },
+                "401":{
+                    "$ref": "#/responses/401"
+                }
+            }
+        },
+        "put":{
+            "tags":["cart"],
+            "summary":"edit user cart",
+            "description":"edit user active cart <br/> use product id in body",
+            "security": [{"token" : []}],
+            "requestBody":{
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "$ref":"../schemas.json#/editCartBody"
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200":{
+                    "$ref": "#/responses/200"
+                },
+                "404":{
+                    "$ref": "#/responses/404"
+                },
+                "401":{
+                    "$ref": "#/responses/401"
+                }
+            }
+        },
+        "delete":{
+            "tags":["cart"],
+            "summary":"delete user cart",
+            "description": "delete user active cart",
+            "security": [{"token" : []}],
+            "responses":{
+                "200":{
+                    "description":"Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/ALL"
+                            }
+                        }
+                    }
+                },
+                "404":{
+                    "$ref": "#/responses/404"
+                },
+                "401":{
+                    "$ref": "#/responses/401"
+                }
+            }
+        }
+    },
+    "increase":{
+        "patch":{
+            "tags":["cart"],
+            "summary": "increase one",
+            "description": "incorect product one in cart",
+            "security": [{"token" : []}],
+            "requestBody":{
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "productId":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200":{
+                    "$ref":"#/responses/200"
+                },
+                "404":{
+                    "$ref":"#/responses/404"
+                },
+                "401":{
+                    "$ref":"#/responses/401"
+                }
+            }
+        }
+    },
+    "reduce":{
+        "patch":{
+            "tags":["cart"],
+            "summary": "reduce one",
+            "description": "reduce product one in cart",
+            "security": [{"token" : []}],
+            "requestBody":{
+                "content":{
+                    "application/json":{
+                        "schema":{
+                            "type":"object",
+                            "properties":{
+                                "productId":{
+                                    "type":"string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "responses":{
+                "200":{
+                    "$ref":"#/responses/200"
+                },
+                "404":{
+                    "$ref":"#/responses/404"
+                },
+                "401":{
+                    "$ref":"#/responses/401"
+                }
+            }
+        }
+    },
+    "responses":{
+        "200":{
+            "description":"Success",
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref": "../schemas.json#/getCartRes"
+                    }
+                }
+            }
+        },
+        "404":{
+            "description":"not found",
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref": "../schemas.json#/Error"
+                    }
+                }
+            }
+        },
+        "401":{
+            "description":"no permission",
+            "content":{
+                "application/json":{
+                    "schema":{
+                        "$ref": "../schemas.json#/Error"
+                    }
+                }
+            }
+        }
+    }
+}

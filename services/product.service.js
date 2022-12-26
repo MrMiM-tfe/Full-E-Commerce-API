@@ -54,6 +54,31 @@ exports.getProductBySlug = async (slug) => {
     }
 }
 
+/**
+ * @desc    Get Product By Id
+ * @param   { String } id
+ * @returns {Object<type|message|statusCode|product>} { type, message, statusCode, product }
+ */
+ exports.getProductById = async (id) => {
+    const product = await Product.findById(id)
+
+    if (!product) {
+        return {
+            type: "Error",
+            message: "productNotFound",
+            statusCode: 404
+        }
+    }
+
+    return {
+        type: "Success",
+        message: "productFound",
+        statusCode: 200,
+        product
+    }
+}
+
+
 
 /**
  * @desc    Create new Product
@@ -87,28 +112,36 @@ exports.createProduct = async (body, seller) => {
         }
     }
 
-    // 2) Create product
-    const product = await Product.create({
-        name,
-        slug,
-        coverImage,
-        images,
-        shortDes,
-        des,
-        seller,
-        categories,
-        regularPrice,
-        sellPrice,
-        quantity,
-        isOutOfStock
-    })
-
-    return {
-        type: 'Success',
-        message: 'successfulProductCreate',
-        statusCode: 201,
-        product
-    };
+    try {
+        // 2) Create product
+        const product = await Product.create({
+            name,
+            slug,
+            coverImage,
+            images,
+            shortDes,
+            des,
+            seller,
+            categories,
+            regularPrice,
+            sellPrice,
+            quantity,
+            isOutOfStock
+        })
+    
+        return {
+            type: 'Success',
+            message: 'successfulProductCreate',
+            statusCode: 201,
+            product
+        };   
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode ?? 500
+        }
+    }
 }
 
 /**
@@ -153,18 +186,27 @@ exports.updateProductById = updateProductById = async (productId, sellerId, body
         }
     }
 
-    // 3) Update product
-    const product = await Product.findByIdAndUpdate(productId, body, {
-        new: true,
-        runValidators: true
-    })
-
-    return {
-        type: 'Success',
-        message: 'successfulProductDetails',
-        statusCode: 200,
-        product
+    try {
+        // 3) Update product
+        const product = await Product.findByIdAndUpdate(productId, body, {
+            new: true,
+            runValidators: true
+        })
+    
+        return {
+            type: 'Success',
+            message: 'successfulProductUpdated',
+            statusCode: 200,
+            product
+        }
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode ?? 500
+        }
     }
+    
 }
 
 /**

@@ -5,7 +5,7 @@ const tokenTypes = require('../config/tokens')
 const { generateAuthToken } = require('../middlewares/token')
 
 // Models
-const { User } = require('../models')
+const { User ,Token } = require('../models')
 
 /**
  * @desc    Signup Service
@@ -51,22 +51,30 @@ exports.signup = async (body) => {
     
     // 2) Create new User
     const savingData = { name, username, email, password, passwordConfirmation, role, address, phone}
-    const user = await User.create(savingData)
-    
-    // 3) Generate token
-    const token = await generateAuthToken(user)
 
-    // 4) Remove the password from the output
-    user.password = undefined;
+    try {
+        const user = await User.create(savingData)
 
+        // 3) Generate token
+        const token = await generateAuthToken(user)
 
-    return {
-        type: 'Success',
-        statusCode: 201,
-        message: 'successfulSignUp',
-        user,
-        token
-    };
+        // 4) Remove the password from the output
+        user.password = undefined;
+
+        return {
+            type: 'Success',
+            statusCode: 201,
+            message: 'successfulSignUp',
+            user,
+            token
+        };
+    } catch (error) {
+        return {
+            type: "Error",
+            message: error.message,
+            statusCode: error.statusCode ?? 500
+        }
+    }
 }
 
 /**

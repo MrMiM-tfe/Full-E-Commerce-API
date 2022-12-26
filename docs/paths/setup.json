@@ -1,0 +1,17 @@
+{
+    "home":{
+        "get":{
+            "tags":["setup"],
+            "summary": "setup the API",
+            "description": "setup API for first time",
+            "responses":{
+                "200":{
+                    "description":"Success"
+                },
+                "401":{
+                    "description": "loaded befor"
+                }
+            }
+        }
+    }
+}

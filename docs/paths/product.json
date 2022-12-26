@@ -215,5 +215,43 @@
                 }
             }
         }
+    },
+    "singleId":{
+        "get":{
+            "tags":["product"],
+            "summary": "Get single Product",
+            "parameters": [
+                {
+                  "name": "id",
+                  "required":true,
+                  "in":"path",
+                  "schema":{
+                    "type":"string"
+                  }
+                }
+            ],
+            "responses":{
+                "200":{
+                    "description": "Success",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/singleProductRes"
+                            }
+                        }
+                    }
+                },
+                "404":{
+                    "description": "no Found",
+                    "content":{
+                        "application/json":{
+                            "schema":{
+                                "$ref": "../schemas.json#/Error"
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 }
