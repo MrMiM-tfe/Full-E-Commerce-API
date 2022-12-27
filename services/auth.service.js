@@ -47,10 +47,16 @@ exports.signup = async (body) => {
             statusCode: 400
         }
     }
-    
+
     
     // 2) Create new User
     const savingData = { name, username, email, password, passwordConfirmation, role, address, phone}
+
+    // check if it is first user to set role as "admin"
+    const user_count = await User.countDocuments()
+    if (user_count === 0){
+        savingData.role = "admin"
+    }
 
     try {
         const user = await User.create(savingData)
