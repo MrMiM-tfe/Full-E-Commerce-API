@@ -8,6 +8,8 @@ const prodcutService = require('./product.service')
 const prodcutCommentService = require("./productComment.service")
 const productCategoryService = require("./productCategory.service")
 
+const searchService = require("./search.service")
+
 const cartService = require('./cart.service')
 const orderService = require('./order.service')
 const paymentService = require('./payment.service')
@@ -22,5 +24,6 @@ module.exports = {
     productCategoryService,
     cartService,
     orderService,
-    paymentService
+    paymentService,
+    searchService
 }

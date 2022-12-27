@@ -18,8 +18,6 @@ const checkIsFirstLoad = async (req, res, next) => {
 const checkSetup = async (req, res, next) => {
     const isLoaded = await Keyv.findOne({key: "loaded"})
 
-    console.log(isLoaded);
-
     if (isLoaded?.value === "true"){
         next()
     }else{

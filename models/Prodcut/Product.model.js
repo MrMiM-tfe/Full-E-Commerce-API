@@ -66,6 +66,8 @@ const productSchema = new mongoose.Schema({
     timestamps: true
 })
 
+productSchema.index({name: "text", shortDes: "text"})
+
 productSchema.index(
     { name: 1, price: 1, sold: 1, ratingsAverage: -1 },
     { unique: true }

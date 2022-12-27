@@ -1,5 +1,5 @@
 // services
-const { prodcutService } = require('../services')
+const { prodcutService, searchService } = require('../services')
 
 /**
  * @desc      Get All Products Controller
@@ -170,4 +170,21 @@ exports.deleteProduct = async (req, res) => {
         type,
         message,
     })
+}
+
+exports.autoComplite = async (req, res) => {
+
+    const searchStr = req.query.q ?? ""
+
+    const products = await searchService.autoComplite(searchStr)
+
+    res.status(200).json({
+        type: "Success",
+        message: "OK",
+        products
+    })
+}
+
+exports.search = async (req, res) => {
+    return res.json(await searchService.search(req))
 }
