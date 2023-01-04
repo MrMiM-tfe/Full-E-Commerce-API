@@ -6,6 +6,7 @@ dotenv.config({path: '.env'})
 const config = {
     server:{
         port: env['PORT'] ?? 3000,
+        httpsPort: env['HTTPS_PORT'] ?? 4000
     },
     jwt:{
         secret: env["SECRET"] ?? "test",

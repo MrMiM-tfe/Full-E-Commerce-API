@@ -1,4 +1,6 @@
 // Packages
+const http = require("http")
+const https = require("https")
 const express = require('express')
 const helmet = require('helmet')
 const xss = require('xss-clean')
@@ -43,5 +45,8 @@ app.use('/api', routes)
 // Contect to database
 mongoose.connect(config.db.url).then((result) => {
     app.listen(config.server.port)
+    https.createServer(app).listen(config.server.httpsPort, () => {
+        console.log(`https Server is listening  on port ${config.server.httpsPort}`);
+    })
     console.log(`Server is listening  on port ${config.server.port}`);
 })
